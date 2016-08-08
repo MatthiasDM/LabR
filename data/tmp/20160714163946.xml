@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<labrRequest>
+    <patient>
+        <name fontSize="12" length="0" width="150" x="140" y="100">De Mey</name>
+        <firstName fontSize="12" length="0" width="150" x="140" y="120">Georges</firstName>
+        <straatAndNumber fontSize="12" length="0" width="200" x="380" y="90">Hemelbeekstraat 16</straatAndNumber>
+        <zip fontSize="12" length="0" width="50" x="380" y="110">8000</zip>
+        <city fontSize="12" length="0" width="100" x="380" y="130">Koolkerke</city>
+        <gender fontSize="12" length="0" width="0" x="140" y="160">Male</gender>
+        <birthDate fontSize="12" length="0" width="100" x="140" y="140">____/__/__</birthDate>
+        <country fontSize="12" length="0" width="0" x="380" y="150">Belgie</country>
+        <nationalNumber fontSize="12" length="0" width="100" x="380" y="170"> </nationalNumber>
+    </patient>
+    <attributes>
+        <age>0</age>
+        <hiv>false</hiv>
+        <prostateCancer>false</prostateCancer>
+        <title>LABR-83166909-201607140439</title>
+    </attributes>
+    <labels>
+        <label color="-65536" id=" " size="14" x="640" y="240">Scheikunde</label>
+        <label color="-16777216" id=" " size="20" x="20" y="10">Aanvraagformulier voor klinische biologie</label>
+        <label color="-16737793" id=" " size="14" x="340" y="230">Stolling</label>
+        <label color="-6749953" id=" " size="14" x="20" y="230">Hematologie</label>
+        <label color="-10066330" id=" " size="11" x="20" y="40">Dit aanvraagformulier wordt gebruik voor testdoeleinden.</label>
+        <label color="-16777216" id=" " size="16" x="20" y="60">Patientgegevens</label>
+        <label color="-16777216" id=" " size="16" x="20" y="200">Aanvragen</label>
+        <label color="-16777216" id=" " size="11" x="300" y="150">Land:</label>
+        <label color="-16777216" id=" " size="11" x="300" y="90">Adres:</label>
+        <label color="-16777216" id=" " size="11" x="300" y="130">Stad:</label>
+        <label color="-16777216" id=" " size="11" x="300" y="110">Postcode:</label>
+        <label color="-16777216" id=" " size="11" x="300" y="170">ID-nummer:</label>
+        <label color="-16777216" id=" " size="11" x="40" y="100">Naam:</label>
+        <label color="-16777216" id=" " size="11" x="40" y="120">Voornaam:</label>
+        <label color="-16777216" id=" " size="11" x="40" y="140">Geboortedatum:</label>
+        <label color="-16777216" id=" " size="11" x="40" y="160">Geslacht:</label>
+    </labels>
+    <buttons>
+        <save color="0" length="0" width="0" x="570" y="10">Save</save>
+    </buttons>
+    <requests>
+        <request loinc="789-8" selected="true" value="Rode bloedcellen (bloed)" x="20" y="260"/>
+        <request loinc="6690-2" selected="true" value="Witte bloedcellen (bloed)  - automaat" x="20" y="280"/>
+        <request loinc="718-7" selected="true" value="Hemoglobine (bloed)" x="20" y="300"/>
+        <request loinc="4544-3" selected="true" value="Hematocriet (bloed)" x="20" y="320"/>
+        <request loinc="777-3" selected="true" value="Bloedplaatjes (bloed) - automaat" x="20" y="340"/>
+        <request loinc="" selected="true" value="Witte bloedcellen differentiatie (bloed)" x="20" y="360"/>
+        <request loinc="" selected="true" value="Fibrinogeen" x="340" y="260"/>
+        <request loinc="15129-0" selected="true" value="D-dimeren (XDP)" x="340" y="280"/>
+        <request loinc="2951-2" selected="true" value="Natrium (serum/plasma)" x="640" y="270"/>
+        <request loinc="2823-3" selected="true" value="Kalium (serum/plasma)" x="640" y="290"/>
+        <request loinc="2075-0" selected="true" value="Chloride (serum/plasma)" x="640" y="310"/>
+    </requests>
+</labrRequest>

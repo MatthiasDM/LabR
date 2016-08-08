@@ -1,0 +1,1 @@
+Select MNEMONIC, LABCODE, Profielen.posX, Profielen.posY from Bepalingen, Profielen WHERE Bepalingen.ID = Profielen.BepalingID and Profielen.ProfielID = 1

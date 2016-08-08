@@ -28,15 +28,19 @@ import be.ehealth.technicalconnector.validator.impl.SAMLSessionValidator;
 import be.fgov.ehealth.aa.complextype.v1.HealthCareProfessional;
 import be.fgov.ehealth.addressbook.protocol.v1.GetProfessionalContactInfoRequest;
 import be.fgov.ehealth.addressbook.protocol.v1.GetProfessionalContactInfoResponse;
+import be.fgov.ehealth.addressbook.protocol.v1.HealthCareOrganization;
 import be.fgov.ehealth.addressbook.protocol.v1.SearchOrganizationsRequest;
 import be.fgov.ehealth.addressbook.protocol.v1.SearchOrganizationsResponse;
 import be.fgov.ehealth.addressbook.protocol.v1.SearchProfessionalsRequest;
 import be.fgov.ehealth.addressbook.protocol.v1.SearchProfessionalsResponse;
 import java.util.ArrayList;
+import java.util.Arrays;
 import static java.util.Arrays.asList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JTable;
+import javax.swing.WindowConstants;
 import labr_client.GUI.custom_classes.CustomJPanel;
 import static labr_client.GUI.forms.MainWindow.queries;
 import labr_client.Public.PublicFunctions;
@@ -56,6 +60,7 @@ public class EhealthSearch extends javax.swing.JFrame {
     public EhealthSearch() {
         initComponents();
         this.setVisible(true);
+        this.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
     }
 
     public SearchProfessionalsResponse searchProf() throws ConnectorException {
@@ -66,24 +71,36 @@ public class EhealthSearch extends javax.swing.JFrame {
         return response;
     }
 
-    public void populateTableOrgs() {
-
-    }
-
-    public void populateTableProfs(SearchProfessionalsResponse response) {
-                List<Integer[]> columnData = asList(
+    public void populateTableOrgs(SearchOrganizationsResponse response) {
+        List<Integer[]> columnData = asList(
                 new Integer[]{0, 300, -1, -1},
                 new Integer[]{1, 60, -1, -1},
                 new Integer[]{2, 60, -1, -1}
-                
         );
-        String[] headings = {"Name", "Firstname", "SSIN"};
+        String[] headings = {"Name", "Type", "ID"};
         List<String[]> formattedLines = new ArrayList<>();
-        
-        for (HealthCareProfessional prof : response.getHealthCareProfessionals()) {
-            formattedLines.add(new String[]{prof.getLastName(), prof.getFirstName(), prof.getSSIN()});
+
+        for (HealthCareOrganization org : response.getHealthCareOrganizations()) {
+            formattedLines.add(new String[]{org.getNames().get(0).getValue(), org.getId().getType(), org.getId().getValue()});
         }
         PublicFunctions.populateTable(jTable1, formattedLines, 1, columnData, headings);
+    }
+
+    public void populateTableProfs(SearchProfessionalsResponse response) {
+        List<Integer[]> columnData = asList(
+                new Integer[]{0, 300, -1, -1},
+                new Integer[]{1, 60, -1, -1},
+                new Integer[]{2, 60, -1, -1}
+        );
+        String[] headings = {"Name", "Firstname", "ID"};
+        List<String[]> formattedLines = new ArrayList<>();
+
+        for (HealthCareProfessional prof : response.getHealthCareProfessionals()) {
+            formattedLines.add(new String[]{prof.getLastName(), prof.getFirstName(), prof.getProfessions().get(0).getNIHII()});
+
+        }
+        PublicFunctions.populateTable(jTable1, formattedLines, 1, columnData, headings);
+
     }
 
     SAMLToken token;
@@ -120,8 +137,10 @@ public class EhealthSearch extends javax.swing.JFrame {
         SearchProfessionalsRequest request = new SearchProfessionalsRequest();
         request.setFirstName(firstname);
         request.setLastName(name);
+        request.setProfession("PHYSICIAN");
         request.setIssueInstant(DateTime.now());
         //request.setOffset(1);
+
         request.setMaxElements(10);
         return request;
     }
@@ -136,20 +155,20 @@ public class EhealthSearch extends javax.swing.JFrame {
     }
 
     //---------------------------------------------------------------
-    public void searchOrganizations(String nihii) throws ConnectorException {
+    public SearchOrganizationsResponse searchOrganizations(String nihii) throws ConnectorException {
         SearchOrganizationsRequest request = createSearchOrganizationsRequest(nihii);
         AddressbookSessionService service = AddressbookSessionServiceFactory.getAddressbookSessionService();
         SearchOrganizationsResponse response = service.searchOrganizations(request);
 
-        String a = "1";
+        return response;
         //AddressbookTestUtils.verifySearchOrganizationsResponse(response);
     }
 
-    public void searchOrganizations(String name, boolean bool) throws ConnectorException {
+    public SearchOrganizationsResponse searchOrganizations(String name, boolean bool) throws ConnectorException {
         SearchOrganizationsRequest request = createSearchOrganizationsRequest(name, bool);
         AddressbookSessionService service = AddressbookSessionServiceFactory.getAddressbookSessionService();
         SearchOrganizationsResponse response = service.searchOrganizations(request);
-        //AddressbookTestUtils.verifySearchOrganizationsResponse(response);
+        return response;
     }
 
     public static SearchOrganizationsRequest createSearchOrganizationsRequest(String nihii) {
@@ -165,6 +184,7 @@ public class EhealthSearch extends javax.swing.JFrame {
         SearchOrganizationsRequest request = new SearchOrganizationsRequest();
         request.setInstitutionName(name);
         request.setIssueInstant(DateTime.now());
+        request.setInstitutionType("LABO");
         request.setOffset(1);
         request.setMaxElements(10);
         return request;
@@ -179,7 +199,7 @@ public class EhealthSearch extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel1 = new CustomJPanel(671,455, "#FFFFFF");
+        jPanel1 = new CustomJPanel(671,500, "#DDB300");
         jTextFieldOrgNihii = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -193,8 +213,14 @@ public class EhealthSearch extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         jButton3 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
+        jLabel3 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+        });
 
         jTextFieldOrgNihii.setText("NIHII number");
 
@@ -216,6 +242,11 @@ public class EhealthSearch extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3"
             }
         ));
+        jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTable1MouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(jTable1);
 
         jButton2.setText("Search");
@@ -251,6 +282,9 @@ public class EhealthSearch extends javax.swing.JFrame {
             }
         });
 
+        jLabel3.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jLabel3.setText("Search for eHealth members");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -272,7 +306,8 @@ public class EhealthSearch extends javax.swing.JFrame {
                                     .addGroup(jPanel1Layout.createSequentialGroup()
                                         .addComponent(jTextFieldProfName, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jButton3)))))
+                                        .addComponent(jButton3))))
+                            .addComponent(jLabel3))
                         .addGap(87, 87, 87)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel2)
@@ -290,7 +325,9 @@ public class EhealthSearch extends javax.swing.JFrame {
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(52, 52, 52)
+                .addGap(38, 38, 38)
+                .addComponent(jLabel3)
+                .addGap(30, 30, 30)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(jLabel2))
@@ -309,7 +346,7 @@ public class EhealthSearch extends javax.swing.JFrame {
                     .addComponent(jButton1))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 275, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(36, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -331,7 +368,7 @@ public class EhealthSearch extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         try {
             // TODO add your handling code here:
-            searchOrganizations(jTextFieldOrgNihii.getText());
+            populateTableOrgs(searchOrganizations(jTextFieldOrgNihii.getText()));
         } catch (Exception ex) {
             Logger.getLogger(EhealthSearch.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -349,7 +386,7 @@ public class EhealthSearch extends javax.swing.JFrame {
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         try {
             // TODO add your handling code here:
-            
+
             populateTableProfs(searchProfessionals(jTextFieldProfFirstName.getText(), jTextFieldProfName.getText()));
         } catch (ConnectorException ex) {
             Logger.getLogger(EhealthSearch.class.getName()).log(Level.SEVERE, null, ex);
@@ -359,11 +396,27 @@ public class EhealthSearch extends javax.swing.JFrame {
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         try {
             // TODO add your handling code here:
-            searchOrganizations(jTextFieldOrgName.getText(), true);
+            populateTableOrgs(searchOrganizations(jTextFieldOrgName.getText(), true));
+
         } catch (ConnectorException ex) {
             Logger.getLogger(EhealthSearch.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
+        // TODO add your handling code here:
+        if (evt.getClickCount() == 2) {
+            JTable target = (JTable) evt.getSource();
+            String id = (String) target.getValueAt(target.getSelectedRow(), target.getSelectedColumn());
+
+            // setInfo();
+        }
+    }//GEN-LAST:event_jTable1MouseClicked
+
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        // TODO add your handling code here:
+        this.setVisible(false);
+    }//GEN-LAST:event_formWindowClosing
 
     /**
      * @param args the command line arguments
@@ -408,6 +461,7 @@ public class EhealthSearch extends javax.swing.JFrame {
     private javax.swing.JButton jButton4;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;

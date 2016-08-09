@@ -624,9 +624,9 @@
             <Property name="text" type="java.lang.String" value="        Sent to lab:  "/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JLabel" name="jLabel16">
+        <Component class="javax.swing.JLabel" name="jLabelSentToLab">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Centraal labo AZ Zeno"/>
+            <Property name="text" type="java.lang.String" value="default"/>
           </Properties>
         </Component>
         <Component class="javax.swing.Box$Filler" name="filler2">

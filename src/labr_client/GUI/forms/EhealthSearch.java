@@ -103,6 +103,10 @@ public class EhealthSearch extends javax.swing.JFrame {
 
     }
 
+    public void returnInfoAndClose(){
+    
+    }
+    
     SAMLToken token;
 
     public void getProfessionalContactInfoTest(String nihii) throws Exception {
@@ -199,7 +203,7 @@ public class EhealthSearch extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel1 = new CustomJPanel(671,500, "#DDB300");
+        jPanel1 = new CustomJPanel(671,550, "#DDB300");
         jTextFieldOrgNihii = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -216,11 +220,14 @@ public class EhealthSearch extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setPreferredSize(new java.awt.Dimension(665, 500));
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosing(java.awt.event.WindowEvent evt) {
                 formWindowClosing(evt);
             }
         });
+
+        jPanel1.setPreferredSize(new java.awt.Dimension(665, 500));
 
         jTextFieldOrgNihii.setText("NIHII number");
 
@@ -264,9 +271,9 @@ public class EhealthSearch extends javax.swing.JFrame {
 
         jTextFieldOrgName.setText("Name");
 
-        jLabel1.setText("Search professional");
+        jLabel1.setText("Search physicians");
 
-        jLabel2.setText("Search organisation");
+        jLabel2.setText("Search laboratories");
 
         jButton3.setText("Search");
         jButton3.addActionListener(new java.awt.event.ActionListener() {
@@ -325,7 +332,7 @@ public class EhealthSearch extends javax.swing.JFrame {
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(38, 38, 38)
+                .addGap(30, 30, 30)
                 .addComponent(jLabel3)
                 .addGap(30, 30, 30)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -359,7 +366,7 @@ public class EhealthSearch extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 459, Short.MAX_VALUE)
         );
 
         pack();
@@ -407,7 +414,7 @@ public class EhealthSearch extends javax.swing.JFrame {
         // TODO add your handling code here:
         if (evt.getClickCount() == 2) {
             JTable target = (JTable) evt.getSource();
-            String id = (String) target.getValueAt(target.getSelectedRow(), target.getSelectedColumn());
+            String id = (String) target.getValueAt(target.getSelectedRow(), 2);
 
             // setInfo();
         }

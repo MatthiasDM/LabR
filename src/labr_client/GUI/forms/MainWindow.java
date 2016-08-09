@@ -585,7 +585,7 @@ public class MainWindow extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         jLabelSessionStatus = new javax.swing.JLabel();
         jLabel14 = new javax.swing.JLabel();
-        jLabel16 = new javax.swing.JLabel();
+        jLabelSentToLab = new javax.swing.JLabel();
         filler2 = new javax.swing.Box.Filler(new java.awt.Dimension(100, 0), new java.awt.Dimension(100, 0), new java.awt.Dimension(100, 32767));
 
         jMenuItem3.setText("Delete item");
@@ -971,8 +971,8 @@ public class MainWindow extends javax.swing.JFrame {
         jLabel14.setText("        Sent to lab:  ");
         jToolBar1.add(jLabel14);
 
-        jLabel16.setText("Centraal labo AZ Zeno");
-        jToolBar1.add(jLabel16);
+        jLabelSentToLab.setText("default");
+        jToolBar1.add(jLabelSentToLab);
         jToolBar1.add(filler2);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -1162,12 +1162,12 @@ public class MainWindow extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
-    private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel7;
     private static javax.swing.JLabel jLabelClickToAddPatient;
     private javax.swing.JLabel jLabelEIDName;
+    private javax.swing.JLabel jLabelSentToLab;
     private static javax.swing.JLabel jLabelSessionStatus;
     private javax.swing.JLabel jLabelUser;
     private javax.swing.JMenuItem jMenuItem3;

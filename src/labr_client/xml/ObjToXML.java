@@ -28,6 +28,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JFormattedTextField;
@@ -225,9 +227,14 @@ public class ObjToXML {
                             request.patient.nationalNumber.setY(comp.getY());
                             request.patient.nationalNumber.setWidth(comp.getWidth());
                         } else if (comp.getName().equals("Save")) {
+                            JButton jbut = (JButton) comp;
+                            ImageIcon icon = (ImageIcon) jbut.getIcon();
                             request.buttons.save.setX(comp.getX());
                             request.buttons.save.setY(comp.getY());
                             request.buttons.save.setValue("Save");
+                            if (icon != null) {
+                                request.buttons.save.setIcon(icon.getDescription());
+                            }
                         } else if (comp.getName().equals("Search")) {
                         } else if (comp.getName().equals("saveAndSend")) {
                             request.patient.nationalNumber.setValue(((JTextField) comp).getText());
@@ -269,7 +276,7 @@ public class ObjToXML {
                     }
 
                 }
-                m.marshal(request, new File(PublicVars.getUserData()[9] + profile + ".xml"));
+                m.marshal(request, new File(PublicVars.getUserData()[9] + "\\" + profile + ".xml"));
             }
         } catch (JAXBException e) {
             e.printStackTrace();
@@ -295,7 +302,7 @@ public class ObjToXML {
         return xml;
     }
 
-     public static String marshallRequest(KmehrMessage message) {
+    public static String marshallRequest(KmehrMessage message) {
         String xml = "";
         String date = String.format("%1$tY%1$tm%1$td", new Date());
         String time = String.format("%1$tH%1$tM%1$tS", new Date());
@@ -314,7 +321,6 @@ public class ObjToXML {
         return xml;
     }
 
-    
     public static LabrRequest saveLabrRequest(Component[] comps) {
 
         try {

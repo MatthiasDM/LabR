@@ -215,12 +215,12 @@ public class MainWindow extends javax.swing.JFrame {
         labRequestViewer = new LabRequestViewer(this, true);
         optionWindow = new OptionWindow(this, true);
 
-        jTabbedPane1.setVisible(false);
+        //jTabbedPane1.setVisible(false);
         //jMenuBar1.setVisible(false);
         //---------------------------------------------------------------
+  
         labRequestPanel = new PanelGraphics(getWidth() - 17, getHeight() - 34);
-
-        this.add(labRequestPanel, BorderLayout.CENTER);
+        this.add(labRequestPanel);
         labRequestPanel.setVisible(true);
 
         //---------------------------------------------------------------       
@@ -420,7 +420,8 @@ public class MainWindow extends javax.swing.JFrame {
     }
 
     public String getRequest() {
-        return jTextAreaRequest.getText();
+       // return jTextAreaRequest.getText();
+       return "";
     }
 
     public void send_ehealth_request() {
@@ -434,15 +435,15 @@ public class MainWindow extends javax.swing.JFrame {
     }
 
     public static void showPatientInfo() {
-        List<String> patientInfo = PublicVars.getPatientInformation();
-        if (patientInfo.size() > 0) {
-            jLabelClickToAddPatient.setFont(new Font(jLabelClickToAddPatient.getFont().getName(), Font.BOLD, 12));
-            jLabelClickToAddPatient.setText("<html>" + patientInfo.get(0) + " " + patientInfo.get(1) + "<br>" + patientInfo.get(2) + "<br>" + patientInfo.get(3) + "<br>" + patientInfo.get(4) + "</html>");
-        }
+//        List<String> patientInfo = PublicVars.getPatientInformation();
+//        if (patientInfo.size() > 0) {
+//            jLabelClickToAddPatient.setFont(new Font(jLabelClickToAddPatient.getFont().getName(), Font.BOLD, 12));
+//            jLabelClickToAddPatient.setText("<html>" + patientInfo.get(0) + " " + patientInfo.get(1) + "<br>" + patientInfo.get(2) + "<br>" + patientInfo.get(3) + "<br>" + patientInfo.get(4) + "</html>");
+//        }
     }
 
     public static void hideAddPatientLabel() {
-        jLabelClickToAddPatient.setVisible(false);
+     //   jLabelClickToAddPatient.setVisible(false);
     }
 
 //    public void loadSentMessages() {
@@ -550,34 +551,6 @@ public class MainWindow extends javax.swing.JFrame {
         jPopupMenuLabel = new javax.swing.JPopupMenu();
         jMenuItemEditLabel = new javax.swing.JMenuItem();
         jMenuItemDeleteLabel = new javax.swing.JMenuItem();
-        jTabbedPane1 = new javax.swing.JTabbedPane();
-        jPanelLabRequest = new javax.swing.JPanel();
-        jButtonSaveSendRequest = new javax.swing.JButton();
-        jButtonSaveRequest = new javax.swing.JButton();
-        jButtonPrintRequest = new javax.swing.JButton();
-        jScrollPane_LabRequests = new javax.swing.JScrollPane();
-        jPanel3 = new javax.swing.JPanel();
-        jLabelClickToAddPatient = new javax.swing.JLabel();
-        jPanelSentMessages = new javax.swing.JPanel();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
-        jPanel1 = new javax.swing.JPanel();
-        jSeparator1 = new javax.swing.JSeparator();
-        jButton12 = new javax.swing.JButton();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jTextAreaRequest = new javax.swing.JTextArea();
-        jTextField7 = new javax.swing.JTextField();
-        jTextField8 = new javax.swing.JTextField();
-        jTextField9 = new javax.swing.JTextField();
-        jLabel7 = new javax.swing.JLabel();
-        jLabel11 = new javax.swing.JLabel();
-        jLabel13 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
-        jLabel15 = new javax.swing.JLabel();
-        jLabel17 = new javax.swing.JLabel();
-        jButtonBoxInfo = new javax.swing.JButton();
-        jButtonGetMessages = new javax.swing.JButton();
         jToolBar1 = new javax.swing.JToolBar();
         jLabel1 = new javax.swing.JLabel();
         jLabelEIDName = new javax.swing.JLabel();
@@ -641,301 +614,6 @@ public class MainWindow extends javax.swing.JFrame {
             }
         });
 
-        jTabbedPane1.setBackground(new java.awt.Color(255, 255, 255));
-        jTabbedPane1.setEnabled(false);
-        jTabbedPane1.setOpaque(true);
-        jTabbedPane1.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                jTabbedPane1FocusGained(evt);
-            }
-        });
-        jTabbedPane1.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                jTabbedPane1KeyPressed(evt);
-            }
-        });
-
-        jButtonSaveSendRequest.setText("Save & Send");
-        jButtonSaveSendRequest.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonSaveSendRequestActionPerformed(evt);
-            }
-        });
-
-        jButtonSaveRequest.setText("Save");
-        jButtonSaveRequest.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonSaveRequestActionPerformed(evt);
-            }
-        });
-
-        jButtonPrintRequest.setText("Print");
-        jButtonPrintRequest.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonPrintRequestActionPerformed(evt);
-            }
-        });
-
-        jScrollPane_LabRequests.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-
-        jPanel3.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel3.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-
-        jLabelClickToAddPatient.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jLabelClickToAddPatient.setForeground(new java.awt.Color(150, 150, 150));
-        jLabelClickToAddPatient.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        jLabelClickToAddPatient.setText("Click to add patient");
-        jLabelClickToAddPatient.setVerticalAlignment(javax.swing.SwingConstants.TOP);
-        jLabelClickToAddPatient.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                jLabelClickToAddPatientMousePressed(evt);
-            }
-        });
-
-        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
-        jPanel3.setLayout(jPanel3Layout);
-        jPanel3Layout.setHorizontalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabelClickToAddPatient, javax.swing.GroupLayout.DEFAULT_SIZE, 235, Short.MAX_VALUE))
-        );
-        jPanel3Layout.setVerticalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabelClickToAddPatient, javax.swing.GroupLayout.DEFAULT_SIZE, 74, Short.MAX_VALUE))
-        );
-
-        javax.swing.GroupLayout jPanelLabRequestLayout = new javax.swing.GroupLayout(jPanelLabRequest);
-        jPanelLabRequest.setLayout(jPanelLabRequestLayout);
-        jPanelLabRequestLayout.setHorizontalGroup(
-            jPanelLabRequestLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanelLabRequestLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanelLabRequestLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane_LabRequests, javax.swing.GroupLayout.DEFAULT_SIZE, 710, Short.MAX_VALUE)
-                    .addGroup(jPanelLabRequestLayout.createSequentialGroup()
-                        .addGroup(jPanelLabRequestLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(jPanelLabRequestLayout.createSequentialGroup()
-                                .addComponent(jButtonSaveSendRequest)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jButtonSaveRequest)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jButtonPrintRequest)))
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addContainerGap())
-        );
-        jPanelLabRequestLayout.setVerticalGroup(
-            jPanelLabRequestLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanelLabRequestLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane_LabRequests, javax.swing.GroupLayout.DEFAULT_SIZE, 350, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanelLabRequestLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButtonSaveSendRequest)
-                    .addComponent(jButtonSaveRequest)
-                    .addComponent(jButtonPrintRequest))
-                .addContainerGap())
-        );
-
-        jTabbedPane1.addTab("Create lab request", jPanelLabRequest);
-        jPanelLabRequest.getAccessibleContext().setAccessibleName("");
-        jPanelLabRequest.getAccessibleContext().setAccessibleDescription("");
-
-        jPanelSentMessages.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                jPanelSentMessagesFocusGained(evt);
-            }
-        });
-        jPanelSentMessages.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jPanelSentMessagesMouseClicked(evt);
-            }
-        });
-
-        jButton2.setText("Refresh");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
-            }
-        });
-
-        jButton3.setText("Archive selected");
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
-            }
-        });
-
-        javax.swing.GroupLayout jPanelSentMessagesLayout = new javax.swing.GroupLayout(jPanelSentMessages);
-        jPanelSentMessages.setLayout(jPanelSentMessagesLayout);
-        jPanelSentMessagesLayout.setHorizontalGroup(
-            jPanelSentMessagesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanelSentMessagesLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jButton2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton3)
-                .addContainerGap(532, Short.MAX_VALUE))
-        );
-        jPanelSentMessagesLayout.setVerticalGroup(
-            jPanelSentMessagesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelSentMessagesLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanelSentMessagesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton2)
-                    .addComponent(jButton3))
-                .addContainerGap(462, Short.MAX_VALUE))
-        );
-
-        jTabbedPane1.addTab("Saved requests", jPanelSentMessages);
-
-        jSeparator1.setOrientation(javax.swing.SwingConstants.VERTICAL);
-
-        jButton12.setText("Send request");
-        jButton12.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton12ActionPerformed(evt);
-            }
-        });
-
-        jTextAreaRequest.setColumns(20);
-        jTextAreaRequest.setLineWrap(true);
-        jTextAreaRequest.setRows(5);
-        jTextAreaRequest.setText("<ns2:GetBoxInfoRequest xmlns:ns2=\"urn:be:fgov:ehealth:ehbox:consultation:protocol:v3\">\n  <BoxId>\n    <Id>83166909</Id>\n    <Type>NIHII</Type>\n    <Quality>LABO</Quality>\n  </BoxId>\n</ns2:GetBoxInfoRequest>");
-        jScrollPane1.setViewportView(jTextAreaRequest);
-
-        jTextField7.setText("NIHII-LABO");
-        jTextField7.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField7ActionPerformed(evt);
-            }
-        });
-
-        jTextField8.setText("83166909");
-        jTextField8.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField8ActionPerformed(evt);
-            }
-        });
-
-        jTextField9.setText("LABOAZZENO");
-        jTextField9.setToolTipText("");
-
-        jLabel7.setText("Type");
-
-        jLabel11.setText("Value");
-
-        jLabel13.setText("Application");
-
-        jButton1.setText("Search all Types");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
-            }
-        });
-
-        jButton4.setText("Search");
-        jButton4.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton4ActionPerformed(evt);
-            }
-        });
-
-        jLabel15.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel15.setText("Search person/organisation");
-
-        jLabel17.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel17.setText("Send XML Request");
-
-        jButtonBoxInfo.setText("GetBoxInfo");
-
-        jButtonGetMessages.setText("GetMessages");
-        jButtonGetMessages.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonGetMessagesActionPerformed(evt);
-            }
-        });
-
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel15)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(jLabel7, javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel13, javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel11, javax.swing.GroupLayout.Alignment.LEADING))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(jTextField9, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jTextField8, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jTextField7, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jButton4)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jButton1))
-                            .addComponent(jLabel17)
-                            .addComponent(jButton12, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 365, Short.MAX_VALUE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jButtonBoxInfo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButtonGetMessages, javax.swing.GroupLayout.DEFAULT_SIZE, 124, Short.MAX_VALUE))
-                .addContainerGap())
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jSeparator1)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel15)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jTextField7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel7))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jTextField8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel11))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jTextField9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel13))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jButton1)
-                            .addComponent(jButton4))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel17)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jButtonBoxInfo)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButtonGetMessages)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton12)
-                .addGap(0, 254, Short.MAX_VALUE))
-        );
-
-        jTabbedPane1.addTab("E-health services", jPanel1);
-
         jToolBar1.setBorder(null);
         jToolBar1.setRollover(true);
 
@@ -979,23 +657,15 @@ public class MainWindow extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jTabbedPane1)
-                .addContainerGap())
-            .addComponent(jToolBar1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jToolBar1, javax.swing.GroupLayout.DEFAULT_SIZE, 755, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addContainerGap(541, Short.MAX_VALUE)
                 .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
-
-        jTabbedPane1.getAccessibleContext().setAccessibleName("Tabpane");
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -1009,84 +679,6 @@ public class MainWindow extends javax.swing.JFrame {
         // TODO add your handling code here:
         application_close_events();
     }//GEN-LAST:event_formWindowClosing
-
-    private void jTabbedPane1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTabbedPane1KeyPressed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTabbedPane1KeyPressed
-
-    private void jTabbedPane1FocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTabbedPane1FocusGained
-
-    }//GEN-LAST:event_jTabbedPane1FocusGained
-
-    private void jButtonGetMessagesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonGetMessagesActionPerformed
-        // TODO add your handling code here:
-
-    }//GEN-LAST:event_jButtonGetMessagesActionPerformed
-
-    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-        try {
-            // TODO add your handling code here:
-            //keyDepot.searchETK(jTextField7.getText(), jTextField8.getText(), jTextField9.getText());
-            keyDepot.searchETK(jTextField7.getText(), jTextField8.getText(), jTextField9.getText());
-        } catch (Exception ex) {
-            Logger.getLogger(MainWindow.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }//GEN-LAST:event_jButton4ActionPerformed
-
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:.
-        keyDepot.getIdentifierTypes(jTextField8.getText());
-    }//GEN-LAST:event_jButton1ActionPerformed
-
-    private void jTextField8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField8ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField8ActionPerformed
-
-    private void jTextField7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField7ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField7ActionPerformed
-
-    private void jButton12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton12ActionPerformed
-        send_ehealth_request();
-    }//GEN-LAST:event_jButton12ActionPerformed
-
-    private void jPanelSentMessagesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanelSentMessagesMouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jPanelSentMessagesMouseClicked
-
-    private void jPanelSentMessagesFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jPanelSentMessagesFocusGained
-        // TODO add your handling code here:
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jPanelSentMessagesFocusGained
-
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
-        // loadSentMessages();
-    }//GEN-LAST:event_jButton2ActionPerformed
-
-    private void jLabelClickToAddPatientMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelClickToAddPatientMousePressed
-        // TODO add your handling code here:
-//        patientInfoDialog.setInfo();
-        //  patientInfoDialog.setVisible(true);
-    }//GEN-LAST:event_jLabelClickToAddPatientMousePressed
-
-    private void jButtonPrintRequestActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonPrintRequestActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButtonPrintRequestActionPerformed
-
-    private void jButtonSaveRequestActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSaveRequestActionPerformed
-        // TODO add your handling code here:
-        String xml = createLabRequest();
-        check_LabRequest(xml);
-    }//GEN-LAST:event_jButtonSaveRequestActionPerformed
-
-    private void jButtonSaveSendRequestActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSaveSendRequestActionPerformed
-        // TODO add your handling code here:
-        String xml = createLabRequest();
-        check_LabRequest(xml);
-
-        send_LabRequest(xml);
-    }//GEN-LAST:event_jButtonSaveSendRequestActionPerformed
 
     private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
         // TODO add your handling code here:
@@ -1118,10 +710,6 @@ public class MainWindow extends javax.swing.JFrame {
         //    DeleteLabel();
     }//GEN-LAST:event_jMenuItemDeleteLabelActionPerformed
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton3ActionPerformed
-
     private void formComponentResized(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_formComponentResized
         // TODO add your handling code here:
         labRequestPanel.setSize(getWidth() - 17, getHeight() - 34);
@@ -1147,25 +735,9 @@ public class MainWindow extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.Box.Filler filler2;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton12;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButtonBoxInfo;
-    private javax.swing.JButton jButtonGetMessages;
-    private javax.swing.JButton jButtonPrintRequest;
-    private javax.swing.JButton jButtonSaveRequest;
-    private javax.swing.JButton jButtonSaveSendRequest;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel11;
-    private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
-    private javax.swing.JLabel jLabel15;
-    private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel7;
-    private static javax.swing.JLabel jLabelClickToAddPatient;
     private javax.swing.JLabel jLabelEIDName;
     private javax.swing.JLabel jLabelSentToLab;
     private static javax.swing.JLabel jLabelSessionStatus;
@@ -1175,21 +747,9 @@ public class MainWindow extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItemAddLabel;
     private javax.swing.JMenuItem jMenuItemDeleteLabel;
     private javax.swing.JMenuItem jMenuItemEditLabel;
-    private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel3;
-    public javax.swing.JPanel jPanelLabRequest;
-    private javax.swing.JPanel jPanelSentMessages;
     public static javax.swing.JPopupMenu jPopupMenuLabel;
     public static javax.swing.JPopupMenu jPopupMenuRequestOptions;
     public static javax.swing.JPopupMenu jPopupMenuRequestPanelOptions;
-    private javax.swing.JScrollPane jScrollPane1;
-    public static javax.swing.JScrollPane jScrollPane_LabRequests;
-    private javax.swing.JSeparator jSeparator1;
-    public static javax.swing.JTabbedPane jTabbedPane1;
-    private javax.swing.JTextArea jTextAreaRequest;
-    private javax.swing.JTextField jTextField7;
-    private javax.swing.JTextField jTextField8;
-    private javax.swing.JTextField jTextField9;
     public static javax.swing.JToolBar jToolBar1;
     // End of variables declaration//GEN-END:variables
 

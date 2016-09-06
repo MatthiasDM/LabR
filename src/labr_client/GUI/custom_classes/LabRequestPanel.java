@@ -338,10 +338,18 @@ public final class LabRequestPanel extends JPanel implements DropTargetListener 
         // JButton jbut = getButton(10, 20, request.buttons.save.getValue());
         JButton jbut;
         try {
-            jbut = getButton(10, 20, ImageIO.read(new File(request.buttons.save.getIcon())));
+            if (request.buttons.save.getIcon() != null) {
+                BufferedImage bfImg = ImageIO.read(new File(request.buttons.save.getIcon()));
+                ImageIcon icon = new ImageIcon(bfImg);
+                icon.setDescription(request.buttons.save.getIcon());
+                jbut = getButton(request.buttons.save.getX(), request.buttons.save.getY(), icon, "Save");
+            } else {
+                jbut = getButton(request.buttons.save.getX(), request.buttons.save.getY(), "Save");
+            }
             this.add(jbut);
         } catch (IOException ex) {
             Logger.getLogger(LabRequestPanel.class.getName()).log(Level.SEVERE, null, ex);
+
         }
         //;
 
@@ -773,54 +781,54 @@ public final class LabRequestPanel extends JPanel implements DropTargetListener 
     public JCheckBox addCheckBoxListeners(JCheckBox j) {
         j.addMouseListener(
                 new MouseAdapter() {
-                    private Color background;
+            private Color background;
 
-                    @Override
-                    public void mousePressed(MouseEvent e) {
-                        if (e.isPopupTrigger()) {
-                            PublicVars.setSelectComponentOnLabRequestPanel(e.getComponent());
-                            doPopIndividualRequest(e);
-                        }
-                        if (e.getButton() == MouseEvent.BUTTON1) {
-                        }
-                    }
+            @Override
+            public void mousePressed(MouseEvent e) {
+                if (e.isPopupTrigger()) {
+                    PublicVars.setSelectComponentOnLabRequestPanel(e.getComponent());
+                    doPopIndividualRequest(e);
+                }
+                if (e.getButton() == MouseEvent.BUTTON1) {
+                }
+            }
 
-                    @Override
-                    public void mouseReleased(MouseEvent e) {
-                        if (e.isPopupTrigger()) {
-                            PublicVars.setSelectComponentOnLabRequestPanel(e.getComponent());
-                            doPopIndividualRequest(e);
-                        }
-                    }
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                if (e.isPopupTrigger()) {
+                    PublicVars.setSelectComponentOnLabRequestPanel(e.getComponent());
+                    doPopIndividualRequest(e);
+                }
+            }
 
-                    @Override
-                    public void mouseClicked(MouseEvent e) {
-                    }
+            @Override
+            public void mouseClicked(MouseEvent e) {
+            }
 
-                });
+        });
         return j;
     }
 
     public JLabel addLabelisteners(JLabel j) {
         j.addMouseListener(
                 new MouseAdapter() {
-                    @Override
-                    public void mousePressed(MouseEvent e) {
-                    }
+            @Override
+            public void mousePressed(MouseEvent e) {
+            }
 
-                    @Override
-                    public void mouseReleased(MouseEvent e) {
-                        JLabel currentLbl = (JLabel) e.getComponent();
-                        if (e.isPopupTrigger()) {
-                            PublicVars.setSelectComponentOnLabRequestPanel(e.getComponent());
-                            PublicVars.setPopUpClick(new Point(e.getComponent().getLocation().x, e.getComponent().getLocation().y));
-                            doPopLabel(e);
-                        } else {
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                JLabel currentLbl = (JLabel) e.getComponent();
+                if (e.isPopupTrigger()) {
+                    PublicVars.setSelectComponentOnLabRequestPanel(e.getComponent());
+                    PublicVars.setPopUpClick(new Point(e.getComponent().getLocation().x, e.getComponent().getLocation().y));
+                    doPopLabel(e);
+                } else {
 //                            ClickRequests();
-                        }
-                        //List<String[]> Labels = queries.selectLabel(currentLbl.getText());
-                        //if (Labels.size() > 0) {
-                        //   PublicVars.setCurrentGroupLabel(Labels.get(0)[0]);
+                }
+                //List<String[]> Labels = queries.selectLabel(currentLbl.getText());
+                //if (Labels.size() > 0) {
+                //   PublicVars.setCurrentGroupLabel(Labels.get(0)[0]);
 //                            if (e.isPopupTrigger()) {
 //                                PublicVars.setSelectComponentOnLabRequestPanel(e.getComponent());
 //                                PublicVars.setPopUpClick(e.getLocationOnScreen());
@@ -828,12 +836,12 @@ public final class LabRequestPanel extends JPanel implements DropTargetListener 
 //                            } else {
 //                                ClickRequests();
 //                            }
-                        //}
+                //}
 
-                    }
+            }
 
-                    @Override
-                    public void mouseClicked(MouseEvent e) {
+            @Override
+            public void mouseClicked(MouseEvent e) {
 //                        if (e.getButton() == 3 && PublicVars.isEditRequestForm()) {
 //                            JCheckBox target = (JCheckBox) e.getSource();
 //                            GUI_interface.queries.deleteProfileRequest(PublicVars.getProfielID(), target.getMnemonic(), Integer.parseInt(PublicVars.getUserID()));
@@ -842,44 +850,44 @@ public final class LabRequestPanel extends JPanel implements DropTargetListener 
 //                            GUI_interface.jPanel_aanvraagformulier.revalidate();
 //                            GUI_interface.jPanel_aanvraagformulier.repaint();
 //                        }
-                    }
+            }
 
-                });
+        });
         return j;
     }
 
     public JTextField addTextFieldisteners(JTextField t) {
         t.addMouseListener(
                 new MouseAdapter() {
-                    @Override
-                    public void mousePressed(MouseEvent e) {
-                    }
+            @Override
+            public void mousePressed(MouseEvent e) {
+            }
 
-                    @Override
-                    public void mouseReleased(MouseEvent e) {
-                        JTextField currentTxtF = (JTextField) e.getComponent();
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                JTextField currentTxtF = (JTextField) e.getComponent();
 //                List<String[]> textFields = queries.selectLabel(currentTxtF.getText());
 //                if (textFields.size() > 0) {
 //                    //PublicVars.setCurrentGroupLabel(textFields.get(0)[0]);
 //
 //                }
-                        if (e.isPopupTrigger()) {
-                            PublicVars.setSelectComponentOnLabRequestPanel(e.getComponent());
-                            PublicVars.setPopUpClick(e.getPoint());
-                            doPopLabel(e);
-                        } else {
-                            currentTxtF.requestFocus();
-                            ClickRequests();
-                        }
+                if (e.isPopupTrigger()) {
+                    PublicVars.setSelectComponentOnLabRequestPanel(e.getComponent());
+                    PublicVars.setPopUpClick(e.getPoint());
+                    doPopLabel(e);
+                } else {
+                    currentTxtF.requestFocus();
+                    ClickRequests();
+                }
 
-                    }
+            }
 
-                    @Override
-                    public void mouseClicked(MouseEvent e) {
-                    }
+            @Override
+            public void mouseClicked(MouseEvent e) {
+            }
 //          }
 
-                });
+        });
         return t;
     }
 
@@ -926,14 +934,14 @@ public final class LabRequestPanel extends JPanel implements DropTargetListener 
     public JButton addButtonisteners(JButton b) {
         b.addMouseListener(
                 new MouseAdapter() {
-                    @Override
-                    public void mousePressed(MouseEvent e) {
-                    }
+            @Override
+            public void mousePressed(MouseEvent e) {
+            }
 
-                    @Override
-                    public void mouseReleased(MouseEvent e) {
+            @Override
+            public void mouseReleased(MouseEvent e) {
 
-                        //List<String[]> buttons = queries.selectButton(currentButton.getText()); //Dit veranderen door xml zoekactie van profiel
+                //List<String[]> buttons = queries.selectButton(currentButton.getText()); //Dit veranderen door xml zoekactie van profiel
 //                if (buttons.size() > 0) {
 //                    //PublicVars.setCurrentGroupLabel(textFields.get(0)[0]);
 //                    if (e.isPopupTrigger()) {
@@ -944,21 +952,21 @@ public final class LabRequestPanel extends JPanel implements DropTargetListener 
 //                        ClickRequests();
 //                    }
 //                }
-                    }
+            }
 
-                    @Override
-                    public void mouseClicked(MouseEvent e) {
-                        JButton currentButton = (JButton) e.getComponent();
-                        if (currentButton.getName().equals("Save")) {
-                            ObjToXML.saveKmehrRequest(ObjToXML.saveLabrRequest(e.getComponent().getParent().getComponents()));
-                        }
-                        if (currentButton.getName().equals("Search")) {
-                            MainWindow.OpenPatientSearch(((JButton) e.getSource()).getParent().getComponents());
-                        }
-                    }
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                JButton currentButton = (JButton) e.getComponent();
+                if (currentButton.getName().equals("Save")) {
+                    ObjToXML.saveKmehrRequest(ObjToXML.saveLabrRequest(e.getComponent().getParent().getComponents()));
+                }
+                if (currentButton.getName().equals("Search")) {
+                    MainWindow.OpenPatientSearch(((JButton) e.getSource()).getParent().getComponents());
+                }
+            }
 //          }
 
-                });
+        });
         return b;
     }
 
@@ -986,10 +994,16 @@ public final class LabRequestPanel extends JPanel implements DropTargetListener 
         return btn;
     }
 
-    public JButton getButton(int x, int y, BufferedImage icon) {
-        btn = new JButton(new ImageIcon(icon));
+    public JButton getButton(int x, int y, ImageIcon icon, String name) {
+        btn = new JButton();
+        btn.setLocation(x, y);
+        btn.setName(name);
         btn.setBorder(BorderFactory.createEmptyBorder());
         btn.setContentAreaFilled(false);
+        btn.setSize(50, 50);
+        btn.setIcon(icon);
+        btn = addButtonisteners(btn);
+
         return btn;
     }
 

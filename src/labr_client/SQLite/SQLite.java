@@ -63,6 +63,7 @@ public class SQLite {
             c = (DriverManager.getConnection("jdbc:sqlite:" + path)); //Start connection to database in a connection variable called 'c' 
         } catch (SQLException ex) {
             Logger.getLogger(SQLite.class.getName()).log(Level.SEVERE, null, ex);
+            
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(SQLite.class.getName()).log(Level.SEVERE, null, ex);
         }

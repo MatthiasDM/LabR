@@ -31,7 +31,6 @@ import javax.swing.JCheckBox;
 import javax.swing.JLabel;
 import labr_client.GUI.custom_classes.Dynamic_swing;
 import labr_client.Public.PublicVars;
-import static labr_client.SQLite.SqLiteSessionManager.stringToMD5;
 import labr_client.xml.LabrRequest;
 import org.junit.Assert;
 
@@ -225,8 +224,10 @@ public class SQLiteQueries {
 
     public List<String[]> selectUserInfoPass(String md5Pass, String userName) {
 
-        String statement = "Select * from Gebruikers WHERE Wachtwoord LIKE '" + md5Pass + "' AND Gebruikersnaam LIKE '" + userName + "'";
-        String[] attributes = {"Gebruikersnaam", "ID", "firstname", "lastname", "inss", "nihii", "keystore", "ehealthpass", "keystoreLocation", "profileLocation"};
+        //String statement = "Select * from Gebruikers WHERE Wachtwoord LIKE '" + md5Pass + "' AND Gebruikersnaam LIKE '" + userName + "'";
+        String statement = "Select * from Gebruikers WHERE Gebruikersnaam LIKE '" + userName + "'";
+
+        String[] attributes = {"Gebruikersnaam", "ID", "firstname", "lastname", "inss", "nihii", "keystore", "ehealthpass", "keystoreLocation", "profileLocation", "Wachtwoord"};
         List<String[]> lines = new ArrayList<String[]>();
         lines = SQL.parseSelectStatement(statement, attributes);
         Assert.assertNotNull(lines);

@@ -535,9 +535,9 @@ public class ObjToXML {
             if (patientID.size() == 0) {
                 PublicVars.getQueries().insertPatient(request);
                 patientID = PublicVars.getQueries().selectPatient(request.patient.firstName.getValue(), request.patient.name.getValue(), request.patient.birthDate.getValue());
-                PublicVars.getQueries().insertLabRequest(marshallRequest(request), FileUtils.readFileToString(KmehrRequest), Integer.parseInt(patientID.get(0)[0]), 1, kmehrMessage.header.id.getValue());
+                PublicVars.getQueries().insertLabRequest(marshallRequest(request), FileUtils.readFileToString(KmehrRequest), Integer.parseInt(patientID.get(0)[0]), Integer.parseInt(PublicVars.getUserData()[1]), kmehrMessage.header.id.getValue());
             } else {
-                PublicVars.getQueries().insertLabRequest(marshallRequest(request), FileUtils.readFileToString(KmehrRequest), Integer.parseInt(patientID.get(0)[0]), 1, kmehrMessage.header.id.getValue());
+                PublicVars.getQueries().insertLabRequest(marshallRequest(request), FileUtils.readFileToString(KmehrRequest), Integer.parseInt(patientID.get(0)[0]), Integer.parseInt(PublicVars.getUserData()[1]), kmehrMessage.header.id.getValue());
             }
             //EIND---------------------------------------------------------------------------------
 

@@ -16,9 +16,12 @@
  */
 package labr_client.Public;
 
+import java.io.UnsupportedEncodingException;
 import java.nio.charset.Charset;
 import java.security.GeneralSecurityException;
 import java.util.Random;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.io.IOUtils;
 
@@ -50,8 +53,30 @@ public class encryption {
         byte[] ivData = new byte[AES_NIVBITS / 8]; //Hoe groot is deze array -> 128/8 = 16
         Random r = new Random(); // Note: no  seed here, ie these values are truly random
         r.nextBytes(ivData);
-
+////        try {
+////            System.out.println(new String(ivData, "UTF-8")); // for UTF-8 encoding
+////        } catch (UnsupportedEncodingException ex) {
+////            Logger.getLogger(encryption.class.getName()).log(Level.SEVERE, null, ex);
+////        }
+//        ivData[0] = Byte.valueOf("100");
+//        ivData[1] = Byte.valueOf("1");
+//        ivData[2] = Byte.valueOf("15");
+//        ivData[3] = Byte.valueOf("50");
+//        ivData[4] = Byte.valueOf("70");
+//        ivData[5] = Byte.valueOf("80");
+//        ivData[6] = Byte.valueOf("5");
+//        ivData[7] = Byte.valueOf("45");
+//        ivData[8] = Byte.valueOf("100");
+//        ivData[9] = Byte.valueOf("1");
+//        ivData[10] = Byte.valueOf("15");
+//        ivData[11] = Byte.valueOf("50");
+//        ivData[12] = Byte.valueOf("70");
+//        ivData[13] = Byte.valueOf("80");
+//        ivData[14] = Byte.valueOf("5");
+//        ivData[15] = Byte.valueOf("45");
         // Select encryption algorithm and padding : AES with CBC and PCKS#7
+        
+        //byte[] ivData = new sun.misc.BASE64Decoder().decodeBuffer(salt);
         BlockCipherPadding padding = new PKCS7Padding();
         BufferedBlockCipher cipher = new PaddedBufferedBlockCipher(new CBCBlockCipher(new AESEngine()), padding);
 
@@ -84,6 +109,7 @@ public class encryption {
         byte[] bytesAll = new byte[ivData.length + bytesEnc.length];
         System.arraycopy(ivData, 0, bytesAll, 0, ivData.length);
         System.arraycopy(bytesEnc, 0, bytesAll, ivData.length, bytesEnc.length);
+        System.out.println(new String(Base64.encodeBase64(bytesAll), UTF8));
         return new String(Base64.encodeBase64(bytesAll), UTF8);
     }
 
@@ -130,14 +156,15 @@ public class encryption {
         }
 
         // And convert the result to a string
+        System.out.println(new String(bytesDec, UTF8));
         return new String(bytesDec, UTF8);
     }
 
     private static KeyParameter getAesKey() throws GeneralSecurityException {
-        if (aesKey != null) {
-            return aesKey;
-        }
-
+//        if (aesKey != null) {
+//            return aesKey;
+//        }
+        
         byte[] rawKeyData =  PublicVars.getMd5pass().getBytes(); // somehow obtain the raw bytes of the key
                 // Wrap the key data in an appropriate holder type 
         aesKey = new KeyParameter(rawKeyData);

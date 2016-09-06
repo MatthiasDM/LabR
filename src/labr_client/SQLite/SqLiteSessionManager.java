@@ -35,34 +35,67 @@ import labr_client.Public.*;
  * @author De Mey Matthias
  */
 public class SqLiteSessionManager {
-    
 
-    
     public boolean logInAttempt(String userName, String md5Pass) throws UnsupportedEncodingException, NoSuchAlgorithmException {
-        PublicVars.setMd5pass(stringToMD5(md5Pass));
-       
-//        String statement = "Select * from Gebruikers WHERE Wachtwoord LIKE '" + stringToMD5(md5Pass) + "' AND Gebruikersnaam LIKE '" + userName + "'";
-//        String[] attributes = {"Gebruikersnaam", "ID", "firstname","lastname","inss","nihii","keystore", "ehealthpass"};
-        List<String[]> lines = PublicVars.getQueries().selectUserInfoPass(stringToMD5(md5Pass), userName);
-        
+        PublicVars.setMd5pass(MD5(md5Pass));
+
+        List<String[]> lines = PublicVars.getQueries().selectUserInfoPass((md5Pass), userName);
+//        try {
+//            encryption.encode(MD5("test"));
+//        } catch (GeneralSecurityException ex) {
+//
+//            Logger.getLogger(SqLiteSessionManager.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+
         if (!lines.isEmpty()) {
-            for (String[] values : lines) {
-                PublicVars.setUsername(values[0]);
-                PublicVars.setUserID(values[1]);
+            try {
+                if (encryption.decodeBase64Aes(lines.get(0)[10]).equals(PublicVars.getMd5pass())) {
+                    for (String[] values : lines) {
+                        PublicVars.setUsername(values[0]);
+                        PublicVars.setUserID(values[1]);
+                    }
+                    PublicVars.setUserData(lines.get(0));
+                    return true;
+                } else {
+                    return false;
+                }
+            } catch (GeneralSecurityException ex) {
+                Logger.getLogger(SqLiteSessionManager.class.getName()).log(Level.SEVERE, null, ex);
+                return false;
             }
-            PublicVars.setUserData(lines.get(0));
-            return true;
+
         } else {
             return false;
         }
-        
+
+    }
+
+    private static String convertToHex(byte[] data) {
+        StringBuffer buf = new StringBuffer();
+        for (int i = 0; i < data.length; i++) {
+            int halfbyte = (data[i] >>> 4) & 0x0F;
+            int two_halfs = 0;
+            do {
+                if ((0 <= halfbyte) && (halfbyte <= 9)) {
+                    buf.append((char) ('0' + halfbyte));
+                } else {
+                    buf.append((char) ('a' + (halfbyte - 10)));
+                }
+                halfbyte = data[i] & 0x0F;
+            } while (two_halfs++ < 1);
+        }
+        return buf.toString();
+    }
+
+    public static String MD5(String text)
+            throws NoSuchAlgorithmException, UnsupportedEncodingException {
+        MessageDigest md;
+        md = MessageDigest.getInstance("MD5");
+        byte[] md5hash = new byte[32];
+        md.update(text.getBytes("iso-8859-1"), 0, text.length());
+        md5hash = md.digest();
+        return convertToHex(md5hash);
     }
     
-    public static String stringToMD5(String string) throws NoSuchAlgorithmException {
-        
-        MessageDigest messageDigest = MessageDigest.getInstance("MD5");
-        messageDigest.update(string.getBytes(Charset.forName("UTF-8")), 0, string.length());
-        return new BigInteger(1, messageDigest.digest()).toString(16);
-    }
-    
+
 }

@@ -19,21 +19,21 @@ package labr_client.ehealth;
 
 
 import be.ehealth.business.common.domain.Patient;
-import be.ehealth.technicalconnector.exception.TechnicalConnectorException;
+import static be.ehealth.business.common.util.EidUtils.readFromEidCard;
+import static be.ehealth.technicalconnector.beid.BeIDCardFactory.getBeIDCard;
 import be.ehealth.technicalconnector.beid.BeIDInfo;
-import be.ehealth.technicalconnector.beid.*;
-import be.ehealth.business.common.util.EidUtils;
+import static be.ehealth.technicalconnector.beid.BeIDInfo.getInstance;
 import be.ehealth.technicalconnector.beid.domain.Identity;
+import be.ehealth.technicalconnector.exception.TechnicalConnectorException;
 import be.ehealth.technicalconnector.service.sts.security.Credential;
 import be.ehealth.technicalconnector.service.sts.security.SAMLToken;
 import be.ehealth.technicalconnector.session.SessionItem;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import be.ehealth.technicalconnector.utils.SessionUtil;
-import be.fedict.commons.eid.client.BeIDCard;
+import static be.ehealth.technicalconnector.utils.SessionUtil.checkAndRetrieveSession;
 import java.util.ArrayList;
 import java.util.List;
-import labr_client.GUI.custom_classes.Dynamic_swing;
+import static java.util.logging.Level.SEVERE;
+import static java.util.logging.Logger.getLogger;
+import static labr_client.GUI.custom_classes.Dynamic_swing.infoBox;
 
 /**
  *
@@ -49,13 +49,13 @@ public class e_health {
     public List<String> return_eID_info(){
 		BeIDInfo test;
                 
-		List<String> info = new ArrayList<String>();
+		List<String> info = new ArrayList<>();
 		try {         
 			
-                     Patient p = EidUtils.readFromEidCard();
+                     Patient p = readFromEidCard();
                         
-                        if(BeIDCardFactory.getBeIDCard() != null){
-                            test = BeIDInfo.getInstance();
+                        if(getBeIDCard() != null){
+                            test = getInstance();
                             Identity id = test.getIdentity();                            
                             info.add(id.getFirstName());  
                             info.add(id.getName());
@@ -78,12 +78,12 @@ public class e_health {
     
     public void get_ehealth_user_info(){
         try {
-            SessionItem item = SessionUtil.checkAndRetrieveSession();
+            SessionItem item = checkAndRetrieveSession();
             Credential c = item.getHolderOfKeyCredential();           
             SAMLToken t = item.getSAMLToken();            
-            Dynamic_swing.infoBox("Issuer: " + t.getIssuer() + "\n" + "Qualifier: " + t.getIssuerQualifier() + "\nProvider: " + t.getProviderName(),"info");
+            infoBox("Issuer: " + t.getIssuer() + "\n" + "Qualifier: " + t.getIssuerQualifier() + "\nProvider: " + t.getProviderName(),"info");
         } catch (TechnicalConnectorException ex) {
-            Logger.getLogger(e_health.class.getName()).log(Level.SEVERE, null, ex);
+            getLogger(e_health.class.getName()).log(SEVERE, null, ex);
         }
     }
     

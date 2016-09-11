@@ -17,19 +17,14 @@
 package labr_client.GUI.custom_classes;
 
 import java.awt.Color;
+import static java.awt.Color.ORANGE;
 import java.awt.Component;
-import java.awt.GradientPaint;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.RenderingHints;
+import static java.awt.RenderingHints.KEY_ANTIALIASING;
+import static java.awt.RenderingHints.VALUE_ANTIALIAS_OFF;
 import java.awt.Shape;
-import java.awt.event.MouseEvent;
-import java.awt.geom.RoundRectangle2D;
-import javax.swing.AbstractButton;
-import javax.swing.ButtonModel;
 import javax.swing.JButton;
-import javax.swing.JComponent;
-import javax.swing.plaf.basic.BasicButtonListener;
 
 /**
  *
@@ -42,7 +37,7 @@ public class CustomJButton extends JButton {
     protected static final int focusstroke = 2;
     protected final Color fc = new Color(100, 150, 255, 200);
     protected final Color ac = new Color(230, 230, 230);
-    protected final Color rc = Color.ORANGE;
+    protected final Color rc = ORANGE;
     protected Shape shape;
     protected Shape border;
     protected Shape base;
@@ -62,8 +57,7 @@ public class CustomJButton extends JButton {
         g2.setPaint(c.getForeground());
 
         g2.setColor(c.getBackground());
-        g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
-                RenderingHints.VALUE_ANTIALIAS_OFF);
+        g2.setRenderingHint(KEY_ANTIALIASING, VALUE_ANTIALIAS_OFF);
 
     }
 

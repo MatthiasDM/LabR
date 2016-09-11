@@ -16,13 +16,14 @@
  */
 package labr_client.xml;
 
-import org.w3c.dom.*;
-import org.xml.sax.*;
-import javax.xml.parsers.*;
-import javax.xml.xpath.*;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
+import javax.xml.parsers.*;
+import javax.xml.xpath.*;
+import static javax.xml.xpath.XPathConstants.NODESET;
+import org.w3c.dom.*;
+import org.xml.sax.*;
 
 /**
  *
@@ -43,8 +44,8 @@ public class XmlParser {
 
     public List<String> searchDocumentForValues(String expression) throws XPathExpressionException {
         XPath xPath = XPathFactory.newInstance().newXPath();
-        List<String> results = new ArrayList<String>();        
-        NodeList nodeList = (NodeList) xPath.compile(expression).evaluate(xmlDocument, XPathConstants.NODESET);
+        List<String> results = new ArrayList<>();        
+        NodeList nodeList = (NodeList) xPath.compile(expression).evaluate(xmlDocument, NODESET);
         for (int i = 0; i < nodeList.getLength(); i++) {
             Node item = nodeList.item(i);
             results.add(item.getFirstChild().getNodeValue());        

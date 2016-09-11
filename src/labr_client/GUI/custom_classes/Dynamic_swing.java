@@ -16,25 +16,16 @@
  */
 package labr_client.GUI.custom_classes;
 
-import java.awt.Color;
 import java.awt.Component;
-import java.awt.ComponentOrientation;
 import java.awt.Dimension;
 import java.awt.FontMetrics;
-import java.awt.Point;
 import java.awt.Rectangle;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseMotionListener;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.*;
-import labr_client.GUI.forms.MainWindow;
-import static labr_client.GUI.forms.MainWindow.queries;
-import labr_client.SQLite.SQLiteQueries;
-import labr_client.Public.PublicVars;
+import static javax.swing.JOptionPane.OK_CANCEL_OPTION;
+import static javax.swing.JOptionPane.showConfirmDialog;
+import static javax.swing.JOptionPane.showInputDialog;
 
 /**
  *
@@ -196,15 +187,15 @@ public class Dynamic_swing {
     }
 
     public static int infoBox(String infoMessage, String titleBar) {
-        return JOptionPane.showConfirmDialog(null, infoMessage, "InfoBox: " + titleBar, JOptionPane.OK_CANCEL_OPTION);
+        return showConfirmDialog(null, infoMessage, "InfoBox: " + titleBar, OK_CANCEL_OPTION);
     }
 
     public static String questionBox(String question) {
-        return JOptionPane.showInputDialog(question);
+        return showInputDialog(question);
     }
 
     public List<String> getSelectedCheckboxLabTest(Component[] comps) {
-        List<String> requests = new ArrayList<String>();
+        List<String> requests = new ArrayList<>();
 
         for (Component comp : comps) {
             Class<? extends Component> c = comp.getClass();

@@ -26,7 +26,7 @@ import javax.xml.bind.annotation.XmlElement;
  */
 public class LabrXMLRequests {
 
-    private List<LabrXMLRequest> request = new ArrayList<LabrXMLRequest>();
+    private List<LabrXMLRequest> request = new ArrayList<>();
 
     public List<LabrXMLRequest> getRequest() {
         return request;

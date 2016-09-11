@@ -16,7 +16,6 @@
  */
 package labr_client.GUI.forms;
 
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.io.IOException;

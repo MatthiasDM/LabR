@@ -24,7 +24,6 @@ import javax.swing.ImageIcon;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlValue;
-import labr_client.xml.LabrXMLPatient;
 
 /**
  *

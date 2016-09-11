@@ -27,7 +27,7 @@ import labr_client.xml.Kmehr.elements.Hcparty.Hcparty;
  */
 public class Receiver {
 
-    private List<Hcparty> hcparty = new ArrayList<Hcparty>();
+    private List<Hcparty> hcparty = new ArrayList<>();
 
     public List<Hcparty> getHcparty() {
         return hcparty;

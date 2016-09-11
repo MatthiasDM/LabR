@@ -17,33 +17,38 @@
 package labr_client.ehealth;
 
 import be.ehealth.businessconnector.ehbox.api.domain.Addressee;
-import be.ehealth.technicalconnector.config.ConfigFactory;
+import static be.ehealth.technicalconnector.config.ConfigFactory.getConfigValidator;
+import static be.ehealth.technicalconnector.config.ConfigFactory.setConfigLocation;
 import be.ehealth.technicalconnector.config.ConfigValidator;
 import be.ehealth.technicalconnector.exception.SessionManagementException;
-import be.ehealth.technicalconnector.service.sts.security.SAMLToken;
-import be.ehealth.technicalconnector.service.sts.utils.SAMLConverter;
 import be.ehealth.technicalconnector.exception.TechnicalConnectorException;
 import be.ehealth.technicalconnector.service.sts.SAMLTokenFactory;
+import be.ehealth.technicalconnector.service.sts.security.SAMLToken;
 import be.ehealth.technicalconnector.service.sts.security.impl.KeyStoreCredential;
+import static be.ehealth.technicalconnector.service.sts.utils.SAMLConverter.toElement;
+import static be.ehealth.technicalconnector.service.sts.utils.SAMLConverter.toXMLString;
 import be.ehealth.technicalconnector.session.Session;
 import be.ehealth.technicalconnector.session.SessionItem;
-import java.io.FileOutputStream;
-import java.io.FileReader;
 import be.ehealth.technicalconnector.session.SessionManager;
 import be.ehealth.technicalconnector.utils.CertificateParser;
-import org.w3c.dom.Element;
-import be.ehealth.technicalconnector.utils.IdentifierType;
+import static be.ehealth.technicalconnector.utils.IdentifierType.NIHII_LABO;
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.FileReader;
 import java.io.IOException;
 import java.security.GeneralSecurityException;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import labr_client.GUI.custom_classes.Dynamic_swing;
-import labr_client.Public.PublicVars;
-import labr_client.Public.encryption;
+import static java.util.logging.Level.SEVERE;
+import static java.util.logging.Logger.getLogger;
+import static labr_client.GUI.custom_classes.Dynamic_swing.infoBox;
+import static labr_client.Public.PublicVars.getUserData;
+import static labr_client.Public.PublicVars.geteHealthPropertiesLocation;
+import static labr_client.Public.PublicVars.setSender;
+import static labr_client.Public.encryption.decodeBase64Aes;
 import org.apache.commons.io.IOUtils;
+import static org.apache.commons.io.IOUtils.write;
+import org.w3c.dom.Element;
 
 /**
  *
@@ -56,10 +61,10 @@ public class e_health_session_manager {
     private static String type, id, app;
 
     public e_health_session_manager() {
-        File config_file = new File("data\\" + PublicVars.geteHealthPropertiesLocation());      
+        File config_file = new File("data\\" + geteHealthPropertiesLocation());      
         try {
-            ConfigFactory.setConfigLocation(config_file.getAbsoluteFile().getAbsolutePath());
-            ConfigFactory.setConfigLocation("data/tmp/eHealthProps.properties");
+            setConfigLocation(config_file.getAbsoluteFile().getAbsolutePath());
+            setConfigLocation("data/tmp/eHealthProps.properties");
          
             //ConfigFactory.getConfigValidator().setProperty("endpoint.sts", "https://services-int.ehealth.fgov.be/IAM/Saml11TokenService/Legacy/v1"); 
             //ConfigFactory.getConfigValidator().setProperty("endpoint.ehbox.consultation.v3", "https://services-int.ehealth.fgov.be/ehBoxConsultation/v3"); 
@@ -67,7 +72,7 @@ public class e_health_session_manager {
             //ConfigFactory.getConfigValidator().setProperty("endpoint.etk", "https://services-int.ehealth.fgov.be/EtkDepot/v1"); 
 
         } catch (TechnicalConnectorException ex) {
-            Logger.getLogger(e_health.class.getName()).log(Level.SEVERE, null, ex);
+            getLogger(e_health.class.getName()).log(SEVERE, null, ex);
 
         }
 
@@ -75,7 +80,7 @@ public class e_health_session_manager {
 
     public Addressee getSender() throws TechnicalConnectorException {
         CertificateParser certParser = new CertificateParser(Session.getInstance().getSession().getSAMLToken().getCertificate());
-        Addressee addressee = new Addressee(IdentifierType.NIHII_LABO);
+        Addressee addressee = new Addressee(NIHII_LABO);
         addressee.setId(id);//90060717196   83166909
         addressee.setQuality("LABO");
         addressee.setApplicationId(app);
@@ -91,9 +96,9 @@ public class e_health_session_manager {
                 type = certParser.getType();
                 app = certParser.getApplication();
                 id = certParser.getValue();
-                PublicVars.setSender(getSender());
+                setSender(getSender());
             } catch (TechnicalConnectorException ex) {
-                Logger.getLogger(e_health_key_depot.class.getName()).log(Level.SEVERE, null, ex);
+                getLogger(e_health_key_depot.class.getName()).log(SEVERE, null, ex);
             }
 
         }
@@ -103,20 +108,20 @@ public class e_health_session_manager {
     public boolean init_session() {
         String hokPassword = null;
         try {
-            hokPassword = encryption.decodeBase64Aes(PublicVars.getUserData()[7]);
+            hokPassword = decodeBase64Aes(getUserData()[7]);
         } catch (GeneralSecurityException ex) {
-            Logger.getLogger(e_health_session_manager.class.getName()).log(Level.SEVERE, null, ex);
+            getLogger(e_health_session_manager.class.getName()).log(SEVERE, null, ex);
         }
-        String[] userData = PublicVars.getUserData();
-        ConfigFactory.getConfigValidator().setProperty("user.firstname", userData[2]); 
-        ConfigFactory.getConfigValidator().setProperty("user.lastname", userData[3]); 
-        ConfigFactory.getConfigValidator().setProperty("user.inss", userData[4]); 
-        ConfigFactory.getConfigValidator().setProperty("user.nihii", userData[5]); 
-        ConfigFactory.getConfigValidator().setProperty("sessionmanager.holderofkey.keystore", userData[6]);
-        ConfigFactory.getConfigValidator().setProperty("sessionmanager.identification.keystore", userData[6]);
-        ConfigFactory.getConfigValidator().setProperty("sessionmanager.encryption.keystore", userData[6]);
+        String[] userData = getUserData();
+        getConfigValidator().setProperty("user.firstname", userData[2]); 
+        getConfigValidator().setProperty("user.lastname", userData[3]); 
+        getConfigValidator().setProperty("user.inss", userData[4]); 
+        getConfigValidator().setProperty("user.nihii", userData[5]); 
+        getConfigValidator().setProperty("sessionmanager.holderofkey.keystore", userData[6]);
+        getConfigValidator().setProperty("sessionmanager.identification.keystore", userData[6]);
+        getConfigValidator().setProperty("sessionmanager.encryption.keystore", userData[6]);
         SessionManager sessionmgmt = Session.getInstance();
-        Map<String, String> keystores = new HashMap<String, String>(3);
+        Map<String, String> keystores = new HashMap<>(3);
         boolean valid_session = false;
         try {
             valid_session = sessionmgmt.hasValidSession();
@@ -124,7 +129,7 @@ public class e_health_session_manager {
                 sessionmgmt.createFallbackSession(hokPassword);
                 //sessionmgmt.createSession(hokPassword, hokPassword);
             } else {
-                if (Dynamic_swing.infoBox("A Session already exists, do you want to close the old session and create a new one?", "Session already exists") == 0) {
+                if (infoBox("A Session already exists, do you want to close the old session and create a new one?", "Session already exists") == 0) {
                     sessionmgmt.unloadSession();
                     //sessionmgmt.createSession(hokPassword, persPassword);
                     sessionmgmt.createFallbackSession(hokPassword, hokPassword, hokPassword);
@@ -132,11 +137,11 @@ public class e_health_session_manager {
             }
             valid_session = sessionmgmt.hasValidSession();
         } catch (SessionManagementException ex) {
-            Logger.getLogger(e_health.class.getName()).log(Level.SEVERE, null, ex);
+            getLogger(e_health.class.getName()).log(SEVERE, null, ex);
         } catch (TechnicalConnectorException ex) {
-            Logger.getLogger(e_health.class.getName()).log(Level.SEVERE, null, ex);
+            getLogger(e_health.class.getName()).log(SEVERE, null, ex);
         } catch (Exception ex) {
-            Logger.getLogger(e_health.class.getName()).log(Level.SEVERE, null, ex);
+            getLogger(e_health.class.getName()).log(SEVERE, null, ex);
         }
 
         return valid_session;
@@ -146,18 +151,18 @@ public class e_health_session_manager {
         SessionItem item = sessionmgmt.getSession();
 
         Element originalAssertion = item.getSAMLToken().getAssertion();
-        String serializedToken = SAMLConverter.toXMLString(originalAssertion);
+        String serializedToken = toXMLString(originalAssertion);
 
         File temp = new File("tempToken");
         temp.deleteOnExit();
 
-        IOUtils.write(serializedToken.getBytes(), new FileOutputStream(temp));
+        write(serializedToken.getBytes(), new FileOutputStream(temp));
 
         sessionmgmt.unloadSession();
 
-        Element savedAssertion = SAMLConverter.toElement(IOUtils.toString(new FileReader(temp)));
+        Element savedAssertion = toElement(IOUtils.toString(new FileReader(temp)));
 
-        ConfigValidator config = ConfigFactory.getConfigValidator();
+        ConfigValidator config = getConfigValidator();
 
         String hokKeystore = config.getProperty("sessionmanager.holderofkey.keystore");
         String hokAlias = config.getProperty("sessionmanager.holderofkey.alias", "authentication");

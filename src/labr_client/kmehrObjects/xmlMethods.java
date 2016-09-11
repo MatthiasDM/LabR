@@ -17,7 +17,6 @@
 package labr_client.kmehrObjects;
 
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;

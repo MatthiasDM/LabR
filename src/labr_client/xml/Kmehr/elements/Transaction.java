@@ -29,7 +29,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class Transaction {
 
     String date, time;
-    private List<Item> item = new ArrayList<Item>();
+    private List<Item> item = new ArrayList<>();
 
     @XmlElement
     public Id id = new Id();

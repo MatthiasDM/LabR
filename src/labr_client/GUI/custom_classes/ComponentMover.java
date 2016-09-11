@@ -17,9 +17,12 @@
 package labr_client.GUI.custom_classes;
 
 import java.awt.*;
+import static java.awt.Cursor.MOVE_CURSOR;
+import static java.awt.Cursor.getPredefinedCursor;
+import static java.awt.GraphicsEnvironment.getLocalGraphicsEnvironment;
 import java.awt.event.*;
 import javax.swing.JComponent;
-import javax.swing.SwingUtilities;
+import static javax.swing.SwingUtilities.getAncestorOfClass;
 
 /**
  *  This class allows you to move a Component by using a mouse. The Component
@@ -264,7 +267,7 @@ public class ComponentMover extends MouseAdapter
 		}
 		else  //  forward events to destination component
 		{
-			destination = SwingUtilities.getAncestorOfClass(destinationClass, source);
+			destination = getAncestorOfClass(destinationClass, source);
 		}
 
 		pressed = e.getLocationOnScreen();
@@ -273,7 +276,7 @@ public class ComponentMover extends MouseAdapter
 		if (changeCursor)
 		{
 			originalCursor = source.getCursor();
-			source.setCursor( Cursor.getPredefinedCursor(Cursor.MOVE_CURSOR) );
+			source.setCursor(getPredefinedCursor(MOVE_CURSOR) );
 		}
 
 		//  Making sure autoscrolls is false will allow for smoother dragging of
@@ -345,7 +348,7 @@ public class ComponentMover extends MouseAdapter
 	{
 		if (source instanceof Window)
 		{
-			GraphicsEnvironment env = GraphicsEnvironment.getLocalGraphicsEnvironment();
+			GraphicsEnvironment env = getLocalGraphicsEnvironment();
 			Rectangle bounds = env.getMaximumWindowBounds();
 			return new Dimension(bounds.width, bounds.height);
 		}

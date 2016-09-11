@@ -18,7 +18,6 @@ package labr_client.xml.Kmehr.elements;
 
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
-import labr_client.xml.Kmehr.elements.Cd;
 import labr_client.xml.Kmehr.elements.Hcparty.Hcparty;
 
 /**

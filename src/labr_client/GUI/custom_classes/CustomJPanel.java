@@ -17,12 +17,13 @@
 package labr_client.GUI.custom_classes;
 
 import java.awt.Color;
+import static java.awt.Color.decode;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.RenderingHints;
+import static java.awt.RenderingHints.KEY_ANTIALIASING;
+import static java.awt.RenderingHints.VALUE_ANTIALIAS_ON;
 import java.awt.image.BufferedImage;
 import javax.swing.JPanel;
-import labr_client.GUI.forms.MainWindow;
 
 /**
  *
@@ -34,11 +35,11 @@ public class CustomJPanel extends JPanel {
     Graphics backG;
     Graphics2D g2, bbg;
     int width, height, headerRounding = 20;
-    Color c = Color.decode("#EDEBE5");
-    Color colorHeading = Color.decode("#EDEBE5");;
+    Color c = decode("#EDEBE5");
+    Color colorHeading = decode("#EDEBE5");;
     public CustomJPanel(int w, int h, String cHeading){
     this.setSize(w, h);
-    colorHeading = Color.decode(cHeading);
+    colorHeading = decode(cHeading);
     }
     
     public void paintComponent(Graphics g) {
@@ -49,7 +50,7 @@ public class CustomJPanel extends JPanel {
         this.setSize(width, height);
         backBuffer = (BufferedImage) createImage(width, height);
         bbg = (Graphics2D) backBuffer.createGraphics();
-        bbg.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+        bbg.setRenderingHint(KEY_ANTIALIASING, VALUE_ANTIALIAS_ON);
         bbg.setColor(c);
         bbg.fillRect(0, 0, width, height);
         drawHeading(); 
@@ -66,13 +67,13 @@ public class CustomJPanel extends JPanel {
     }
 
     public void drawBody() {
-        bbg.setColor(Color.decode("#FFFFFF"));
+        bbg.setColor(decode("#FFFFFF"));
         int hoogte = height - 130;
         bbg.fillRect((int) (width * 0.05), 80, (int) (width * 0.90), hoogte);
     }
 
     public void drawFooter() {
-        bbg.setColor(Color.decode("#FFFFFF"));
+        bbg.setColor(decode("#FFFFFF"));
         int ypos = height - 120 + 80;
         bbg.fillRoundRect((int) (width * 0.05), ypos - (headerRounding * 2), (int) (width * 0.90), 60, headerRounding, headerRounding);
     }

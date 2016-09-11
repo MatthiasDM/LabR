@@ -16,22 +16,14 @@
  */
 package labr_client.GUI.forms;
 
-import labr_client.GUI.custom_classes.Dynamic_swing;
-import labr_client.GUI.custom_classes.ComponentMover;
 import be.ehealth.businessconnector.ehbox.api.domain.Addressee;
 import be.ehealth.businessconnector.ehbox.api.domain.exception.EhboxBusinessConnectorException;
 import be.ehealth.technicalconnector.exception.ConnectorException;
 import be.ehealth.technicalconnector.exception.TechnicalConnectorException;
-
 import be.ehealth.technicalconnector.utils.IdentifierType;
-import java.awt.BorderLayout;
-import labr_client.ehealth.e_health_session_manager;
-import labr_client.ehealth.e_health_consultation;
-import labr_client.ehealth.e_health;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
-import java.awt.Font;
 import java.awt.Insets;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
@@ -41,36 +33,33 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
-
 import java.util.ArrayList;
-
 import java.util.List;
-
 import java.util.function.Predicate;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
 import javax.swing.JCheckBox;
 import javax.swing.JTable;
 import javax.swing.Timer;
+import javax.swing.WindowConstants;
 import javax.swing.table.DefaultTableModel;
+import labr_client.GUI.custom_classes.ComponentMover;
+import labr_client.GUI.custom_classes.Dynamic_swing;
+import labr_client.GUI.custom_classes.PanelGraphics;
+import labr_client.Public.PublicVars;
 import labr_client.SQLite.SQLiteQueries;
-import labr_client.SQLite.SqLiteSessionManager;
 import labr_client.SQLite.SQLiteQueryProcesser;
+import labr_client.SQLite.SqLiteSessionManager;
+import labr_client.ehealth.e_health;
+import labr_client.ehealth.e_health_consultation;
 import labr_client.ehealth.e_health_key_depot;
 import labr_client.ehealth.e_health_publication;
+import labr_client.ehealth.e_health_session_manager;
 import labr_client.kmehrObjects.KmehrLabRequest;
 import labr_client.server.lab_server;
-import labr_client.Public.PublicVars;
-import org.bouncycastle.cms.CMSException;
-
-import javax.swing.WindowConstants;
-
-import labr_client.GUI.custom_classes.PanelGraphics;
-
 import labr_client.xml.Kmehr.KmehrMessage;
-
 import labr_client.xml.ObjToXML;
+import org.bouncycastle.cms.CMSException;
 
 /**
  *

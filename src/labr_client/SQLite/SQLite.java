@@ -16,14 +16,13 @@
  */
 package labr_client.SQLite;
 
-import java.io.InputStream;
+import static java.lang.Class.forName;
 import java.sql.Connection;
-import java.sql.DriverManager;
+import static java.sql.DriverManager.getConnection;
 import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import labr_client.Public.PublicVars;
-import org.sqlite.JDBC;
+import static java.util.logging.Level.SEVERE;
+import static java.util.logging.Logger.getLogger;
+import static labr_client.Public.PublicVars.getProperties;
 /**
  *
  * @author matmey
@@ -50,22 +49,20 @@ public class SQLite {
         try {
             c.close();
         } catch (SQLException ex) {
-            Logger.getLogger(SQLite.class.getName()).log(Level.SEVERE, null, ex);
+            getLogger(SQLite.class.getName()).log(SEVERE, null, ex);
         }
     }
 
     public void startConnection() {
-        String path = PublicVars.getProperties().getProperty("database_location");
+        String path = getProperties().getProperty("database_location");
         try {
-            Class.forName("org.sqlite.JDBC");
+            forName("org.sqlite.JDBC");
             //String classUrl = this.getClass().getResource("org.sqlite.JDBC").getPath();
        
-            c = (DriverManager.getConnection("jdbc:sqlite:" + path)); //Start connection to database in a connection variable called 'c' 
-        } catch (SQLException ex) {
-            Logger.getLogger(SQLite.class.getName()).log(Level.SEVERE, null, ex);
+            c = (getConnection("jdbc:sqlite:" + path)); //Start connection to database in a connection variable called 'c' 
+        } catch (SQLException | ClassNotFoundException ex) {
+            getLogger(SQLite.class.getName()).log(SEVERE, null, ex);
             
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(SQLite.class.getName()).log(Level.SEVERE, null, ex);
         }
     } 
 

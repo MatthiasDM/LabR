@@ -17,7 +17,6 @@
 package labr_client.GUI.custom_classes;
 
 import java.awt.Component;
-import java.util.List;
 import javax.swing.DefaultListCellRenderer;
 import javax.swing.JLabel;
 import javax.swing.JList;

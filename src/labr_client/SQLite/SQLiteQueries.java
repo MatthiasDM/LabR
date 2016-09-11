@@ -16,10 +16,7 @@
  */
 package labr_client.SQLite;
 
-import java.awt.Component;
-import java.awt.Point;
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -27,8 +24,6 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.JCheckBox;
-import javax.swing.JLabel;
 import labr_client.GUI.custom_classes.Dynamic_swing;
 import labr_client.Public.PublicVars;
 import labr_client.xml.LabrRequest;

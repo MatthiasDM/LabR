@@ -16,11 +16,16 @@
  */
 package labr_client.GUI.custom_classes;
 
-import java.util.*;
 import java.awt.*;
+import static java.awt.Color.BLACK;
+import static java.awt.Color.BLUE;
+import static java.awt.Color.decode;
+import static java.util.Arrays.sort;
 import javax.swing.*;
+import static javax.swing.UIManager.getColor;
 import javax.swing.plaf.*;
 import javax.swing.plaf.basic.*;
+import static javax.swing.plaf.basic.BasicGraphicsUtils.drawStringUnderlineCharAt;
 import javax.swing.text.View;
 
 public class CustomTabbedPaneUI extends BasicTabbedPaneUI {
@@ -52,7 +57,7 @@ public class CustomTabbedPaneUI extends BasicTabbedPaneUI {
             for (int i = 0; i < runCount; i++) {
                 lines[i] = rects[tabRuns[i]].y + (tabPlacement == TOP ? maxTabHeight : 0);
             }
-            Arrays.sort(lines);
+            sort(lines);
             if (tabPlacement == TOP) {
                 int fila = runCount;
                 for (int i = 0; i < lines.length - 1; i++, fila--) {
@@ -121,7 +126,7 @@ public class CustomTabbedPaneUI extends BasicTabbedPaneUI {
             default:
                 xp = new int[]{x, x, x + 6, x + w - inclTab - 12, x + w - inclTab - 4, x + w - inclTab, x + w - inclTab, x};
                 yp = new int[]{y + h, y + 6, y, y, y + 2, y + 6, y + h, y + h};
-                gradientShadow = new GradientPaint(0, 0, Color.BLUE, 0, y + h / 2, new Color(240, 255, 210));
+                gradientShadow = new GradientPaint(0, 0, BLUE, 0, y + h / 2, new Color(240, 255, 210));
                 break;
         }
         // ;
@@ -132,10 +137,10 @@ public class CustomTabbedPaneUI extends BasicTabbedPaneUI {
         } else {
             if (tabPane.isEnabled() && tabPane.isEnabledAt(tabIndex)) {
                 if(tabIndex == 1){
-                    g2D.setColor(Color.decode("#FFB300"));
+                    g2D.setColor(decode("#FFB300"));
                 }
                 if(tabIndex == 2){
-                    g2D.setColor(Color.decode("#C61931"));
+                    g2D.setColor(decode("#C61931"));
                 }
                 
                 //GradientPaint gradientShadowTmp = new GradientPaint(0, 0, new Color(255, 255, 200), 0, y + h / 2, new Color(240, 255, 210));
@@ -168,12 +173,12 @@ public class CustomTabbedPaneUI extends BasicTabbedPaneUI {
             int mnemIndex = tabPane.getDisplayedMnemonicIndexAt(tabIndex);
             if (tabPane.isEnabled() && tabPane.isEnabledAt(tabIndex)) {
                 g.setColor(tabPane.getForegroundAt(tabIndex));
-                BasicGraphicsUtils.drawStringUnderlineCharAt(g, title, mnemIndex, textRect.x, textRect.y + metrics.getAscent());
+                drawStringUnderlineCharAt(g, title, mnemIndex, textRect.x, textRect.y + metrics.getAscent());
             } else { // tab disabled
-                g.setColor(Color.BLACK);
-                BasicGraphicsUtils.drawStringUnderlineCharAt(g, title, mnemIndex, textRect.x, textRect.y + metrics.getAscent());
+                g.setColor(BLACK);
+                drawStringUnderlineCharAt(g, title, mnemIndex, textRect.x, textRect.y + metrics.getAscent());
                 g.setColor(tabPane.getBackgroundAt(tabIndex).darker());
-                BasicGraphicsUtils.drawStringUnderlineCharAt(g, title, mnemIndex, textRect.x - 1, textRect.y + metrics.getAscent() - 1);
+                drawStringUnderlineCharAt(g, title, mnemIndex, textRect.x - 1, textRect.y + metrics.getAscent() - 1);
             }
         }
     }
@@ -230,7 +235,7 @@ public class CustomTabbedPaneUI extends BasicTabbedPaneUI {
     @Override
     protected void paintFocusIndicator(Graphics g, int tabPlacement, Rectangle[] rects, int tabIndex, Rectangle iconRect, Rectangle textRect, boolean isSelected) {
         if (tabPane.hasFocus() && isSelected) {
-            g.setColor(UIManager.getColor("ScrollBar.thumbShadow"));
+            g.setColor(getColor("ScrollBar.thumbShadow"));
             g.drawPolygon(shape);
         }
     }

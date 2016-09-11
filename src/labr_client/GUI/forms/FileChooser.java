@@ -17,7 +17,6 @@
 package labr_client.GUI.forms;
 
 import java.io.File;
-import java.io.InputStream;
 import java.net.URL;
 import javax.swing.JFileChooser;
 

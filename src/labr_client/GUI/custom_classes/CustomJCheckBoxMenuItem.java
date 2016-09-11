@@ -16,16 +16,12 @@
  */
 package labr_client.GUI.custom_classes;
 import java.awt.Color;
+import static java.awt.Color.white;
 import java.awt.Dimension;
 import java.awt.Font;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
+import static java.awt.Font.BOLD;
 import java.awt.Insets;
-import java.awt.RenderingHints;
-import javafx.scene.layout.Border;
 import javax.swing.JCheckBoxMenuItem;
-import javax.swing.JMenuItem;
-import labr_client.Public.PublicFunctions;
 /**
  *
  * @author De Mey Matthias
@@ -40,14 +36,14 @@ public class CustomJCheckBoxMenuItem extends JCheckBoxMenuItem{
         fontSize = fs;
         setPreferredSize(new Dimension(width, 35));
         setMinimumSize(new Dimension(width, 35));
-        this.setFont(new Font("Arial", Font.BOLD, fontSize));
+        this.setFont(new Font("Arial", BOLD, fontSize));
         this.setBorder(null);
         this.setBorderPainted(false);
         this.setMargin(new Insets(0, 0, 0, 0));
         this.setBackground(bgColor);
-        Font font = new Font("Arial", Font.BOLD, fontSize);
+        Font font = new Font("Arial", BOLD, fontSize);
         this.setFont(font);
-        this.setForeground(Color.white);
+        this.setForeground(white);
         this.setText(text);
     }
 

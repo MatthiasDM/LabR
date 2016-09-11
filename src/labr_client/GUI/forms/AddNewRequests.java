@@ -19,12 +19,10 @@ package labr_client.GUI.forms;
 import java.util.ArrayList;
 import static java.util.Arrays.asList;
 import java.util.List;
-import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.WindowConstants;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
-import javax.swing.table.DefaultTableModel;
 import static labr_client.GUI.forms.MainWindow.queries;
 import labr_client.Public.PublicFunctions;
 

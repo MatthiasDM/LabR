@@ -24,8 +24,6 @@ import java.awt.Dimension;
 import java.awt.FontMetrics;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.Image;
-
 import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.RenderingHints;
@@ -36,11 +34,9 @@ import java.awt.dnd.DropTargetEvent;
 import java.awt.dnd.DropTargetListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
-
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -54,21 +50,16 @@ import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
-
+import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-import javax.swing.JFormattedTextField;
 import javax.swing.text.MaskFormatter;
-
 import labr_client.GUI.forms.AddNewRequests;
 import labr_client.GUI.forms.MainWindow;
 import static labr_client.GUI.forms.MainWindow.cm;
-
 import labr_client.GUI.forms.PatientInfo;
-
 import labr_client.Public.PublicFunctions;
-
 import labr_client.Public.PublicVars;
 import labr_client.xml.LabrRequest;
 import labr_client.xml.LabrXMLLabel;

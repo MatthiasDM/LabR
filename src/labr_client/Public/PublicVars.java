@@ -21,7 +21,6 @@ import java.awt.Component;
 import java.awt.Point;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 import java.util.Properties;
 import javax.swing.JPanel;
@@ -65,16 +64,16 @@ public class PublicVars {
         return isEdit;
     }
 
-    public static void setIsEdit(Boolean isEdit) {
-        PublicVars.isEdit = isEdit;
+    public static void setIsEdit(Boolean _isEdit) {
+        isEdit = _isEdit;
     }
 
     public static Properties geteHealthProperties() {
         return eHealthProperties;
     }
 
-    public static void seteHealthProperties(Properties eHealthProperties) {
-        PublicVars.eHealthProperties = eHealthProperties;
+    public static void seteHealthProperties(Properties _eHealthProperties) {
+        eHealthProperties = _eHealthProperties;
     }
        
     
@@ -84,8 +83,8 @@ public class PublicVars {
         return labRequestPanel;
     }
 
-    public static void setLabRequestPanel(JPanel labRequestPanel) {
-        PublicVars.labRequestPanel = labRequestPanel;
+    public static void setLabRequestPanel(JPanel _labRequestPanel) {
+        labRequestPanel = _labRequestPanel;
     }
     
        
@@ -93,8 +92,8 @@ public class PublicVars {
         return CM;
     }
 
-    public static void setCM(ComponentMover CM) {
-        PublicVars.CM = CM;
+    public static void setCM(ComponentMover _CM) {
+        CM = _CM;
     }   
     
     
@@ -102,8 +101,8 @@ public class PublicVars {
         return queries;
     }
 
-    public static void setQueries(SQLiteQueries queries) {
-        PublicVars.queries = queries;
+    public static void setQueries(SQLiteQueries _queries) {
+        queries = _queries;
     }
     
     
@@ -112,72 +111,72 @@ public class PublicVars {
         return md5pass;
     }
 
-    public static void setMd5pass(String md5pass) {
-        PublicVars.md5pass = md5pass;
+    public static void setMd5pass(String _md5pass) {
+        md5pass = _md5pass;
     }    
        
     public static String[] getUserData() {
         return userData;
     }
 
-    public static void setUserData(String[] userData) {
-        PublicVars.userData = userData;
+    public static void setUserData(String[] _userData) {
+        userData = _userData;
     }
 
     public static String geteHealthPropertiesLocation() {
         return eHealthPropertiesLocation;
     }
 
-    public static void seteHealthPropertiesLocation(String eHealthPropertiesLocation) {
-        PublicVars.eHealthPropertiesLocation = eHealthPropertiesLocation;
+    public static void seteHealthPropertiesLocation(String _eHealthPropertiesLocation) {
+        eHealthPropertiesLocation = _eHealthPropertiesLocation;
     }
 
     public static Properties getProperties() {
         return properties;
     }
 
-    public static void setProperties(Properties properties) {
-        PublicVars.properties = properties;
+    public static void setProperties(Properties _properties) {
+        properties = _properties;
     }
 
     public static URL getProgramURL() {
         return programURL;
     }
 
-    public static void setProgramURL(URL programURL) {
-        PublicVars.programURL = programURL;
+    public static void setProgramURL(URL _programURL) {
+        programURL = _programURL;
     }
 
     public static String getCurrentGroupLabel() {
         return currentGroupLabel;
     }
 
-    public static void setCurrentGroupLabel(String currentGroupLabel) {
-        PublicVars.currentGroupLabel = currentGroupLabel;
+    public static void setCurrentGroupLabel(String _currentGroupLabel) {
+        currentGroupLabel = _currentGroupLabel;
     }
 
     public static List<String[]> getLabelsInProfile() {
         return labelsInProfile;
     }
 
-    public static void setLabelsInProfile(List<String[]> labelsInProfile) {
-        PublicVars.labelsInProfile = labelsInProfile;
+    public static void setLabelsInProfile(List<String[]> _labelsInProfile) {
+        labelsInProfile = _labelsInProfile;
     }
 
     public static Point getPopUpClick() {
         return popUpClick;
     }
 
-    public static void setPopUpClick(Point popUpClick) {
-        PublicVars.popUpClick = popUpClick;
+    public static void setPopUpClick(Point _popUpClick) {
+        popUpClick = _popUpClick;
     }
 
     public static Component getSelectComponentOnLabRequestPanel() {
         return selectComponentOnLabRequestPanel;
     }
 
-    public static void setSelectComponentOnLabRequestPanel(Component selectComponentOnLabRequestPanel) {
-        PublicVars.selectComponentOnLabRequestPanel = selectComponentOnLabRequestPanel;
+    public static void setSelectComponentOnLabRequestPanel(Component _selectComponentOnLabRequestPanel) {
+        selectComponentOnLabRequestPanel = _selectComponentOnLabRequestPanel;
     }
 
 //    public static boolean isEditRequestForm() {
@@ -191,34 +190,34 @@ public class PublicVars {
         return requestsInProfile;
     }
 
-    public static void setRequestsInProfile(List<String[]> requestsInProfile) {
-        PublicVars.requestsInProfile = requestsInProfile;
+    public static void setRequestsInProfile(List<String[]> _requestsInProfile) {
+        requestsInProfile = _requestsInProfile;
     }
 
     public static List<String[]> geteHealthMessageInfo() {
         return eHealthMessageInfo;
     }
 
-    public static void seteHealthMessageInfo(List<String[]> eHealthMessageInfo) {
-        PublicVars.eHealthMessageInfo = eHealthMessageInfo;
+    public static void seteHealthMessageInfo(List<String[]> _eHealthMessageInfo) {
+        eHealthMessageInfo = _eHealthMessageInfo;
     }
 
     public static String getProfielID() {
         return profielID;
     }
 
-    public static void setProfielID(String profiel) {
+    public static void setProfielID(String _profiel) {
         //List<String[]> lines = queries.selectProfileID(profileName);
 //        PublicVars.profielID = Integer.parseInt(lines.get(0)[0]);
-        PublicVars.profielID = (profiel);
+        profielID = (_profiel);
     }
 
     public static List<String[]> getProfielNamen() {
         return profielNamen;
     }
 
-    public static void setProfielNamen(List<String[]> profielNamen) {
-        PublicVars.profielNamen = profielNamen;
+    public static void setProfielNamen(List<String[]> _profielNamen) {
+        profielNamen = _profielNamen;
     }
 
     public static String getSenderName() {
@@ -226,96 +225,96 @@ public class PublicVars {
         return sender.getId();
     }
 
-    public static void setSenderName(String senderName) {
-        PublicVars.senderName = senderName;
+    public static void setSenderName(String _senderName) {
+        senderName = _senderName;
     }
 
     public static String getSenderApplicationName() {
         return senderApplicationName;
     }
 
-    public static void setSenderApplicationName(String senderApplicationName) {
-        PublicVars.senderApplicationName = senderApplicationName;
+    public static void setSenderApplicationName(String _senderApplicationName) {
+        senderApplicationName = _senderApplicationName;
     }
 
     public static String getReceiverName() {
         return receiver.get(0).getId();
     }
 
-    public static void setReceiverName(String receiverName) {
-        PublicVars.receiverName = receiverName;
+    public static void setReceiverName(String _receiverName) {
+        receiverName = _receiverName;
     }
 
     public static String getReceiverApplicationName() {
         return receiverApplicationName;
     }
 
-    public static void setReceiverApplicationName(String receiverApplicationName) {
-        PublicVars.receiverApplicationName = receiverApplicationName;
+    public static void setReceiverApplicationName(String _receiverApplicationName) {
+        receiverApplicationName = _receiverApplicationName;
     }
 
     public static List<String> getPatientInformation() {
         return patientInformation;
     }
 
-    public static void setPatientInformation(List<String> patientInformation) {
-        PublicVars.patientInformation = patientInformation;
+    public static void setPatientInformation(List<String> _patientInformation) {
+        patientInformation = _patientInformation;
     }
 
     public static Addressee getSender() {
         return sender;
     }
 
-    public static void setSender(Addressee sender) {
-        PublicVars.sender = sender;
+    public static void setSender(Addressee _sender) {
+        sender = _sender;
     }
 
     public static List<Addressee> getReceiver() {
         return receiver;
     }
 
-    public static void setReceiver(List<Addressee> receiver) {
-        PublicVars.receiver = receiver;
+    public static void setReceiver(List<Addressee> _receiver) {
+        receiver = _receiver;
     }
 
     public static String getTitel() {
         return titel;
     }
 
-    public static void setTitel(String titel) {
-        PublicVars.titel = titel;
+    public static void setTitel(String _titel) {
+        titel = _titel;
     }
 
     public static String getMimeType() {
         return mimeType;
     }
 
-    public static void setMimeType(String mimeType) {
-        PublicVars.mimeType = mimeType;
+    public static void setMimeType(String _mimeType) {
+        mimeType = _mimeType;
     }
 
     public static String getUsername() {
         return username;
     }
 
-    public static void setUsername(String username) {
-        PublicVars.username = username;
+    public static void setUsername(String _username) {
+        username = _username;
     }
 
     public static String getUserID() {
         return userID;
     }
 
-    public static void setUserID(String userID) {
-        PublicVars.userID = userID;
+    public static void setUserID(String _userID) {
+        userID = _userID;
     }
 
     public static List<String[]> getSentMessages() {
         return sentMessages;
     }
 
-    public static void setSentMessages(List<String[]> sentMessages) {
-        PublicVars.sentMessages = sentMessages;
+    public static void setSentMessages(List<String[]> _sentMessages) {
+        sentMessages = _sentMessages;
     }
 
 }

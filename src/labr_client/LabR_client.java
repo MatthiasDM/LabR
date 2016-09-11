@@ -19,16 +19,14 @@ package labr_client;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import static java.lang.ClassLoader.getSystemClassLoader;
 import java.net.URISyntaxException;
 import java.security.CodeSource;
 import java.util.Properties;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import static java.util.logging.Level.SEVERE;
+import static java.util.logging.Logger.getLogger;
 import labr_client.GUI.forms.LoginWindow;
-import labr_client.Public.PublicVars;
-import labr_client.xml.Kmehr.KmehrMessage;
-import labr_client.xml.ObjToXML;
-import labr_client.xml.LabrRequest;
+import static labr_client.Public.PublicVars.setProperties;
 
 /**
  *
@@ -46,7 +44,7 @@ public class LabR_client {
         try {
             loadInitialProperties();
         } catch (IOException ex) {
-            Logger.getLogger(LabR_client.class.getName()).log(Level.SEVERE, null, ex);
+            getLogger(LabR_client.class.getName()).log(SEVERE, null, ex);
         }
         LoginWindow login = new LoginWindow();
 
@@ -60,7 +58,7 @@ public class LabR_client {
             String jarDir = jarFile.getParentFile().getPath();
             //-----------------------------------------------------------            
             Properties p = new Properties();
-            ClassLoader classLoader = ClassLoader.getSystemClassLoader();
+            ClassLoader classLoader = getSystemClassLoader();
             String propLocation = "properties\\config.properties";
             InputStream is = classLoader.getResourceAsStream(propLocation);
             p.load(is);
@@ -71,9 +69,9 @@ public class LabR_client {
             
 //            String path = LabR_client.class.getProtectionDomain().getCodeSource().getLocation().getPath();
 //            String decodedPath = URLDecoder.decode(path, "UTF-8");
-            PublicVars.setProperties(p);
+            setProperties(p);
         } catch (URISyntaxException ex) {
-            Logger.getLogger(LabR_client.class.getName()).log(Level.SEVERE, null, ex);
+            getLogger(LabR_client.class.getName()).log(SEVERE, null, ex);
         }
 
     }

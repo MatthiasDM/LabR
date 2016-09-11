@@ -21,30 +21,30 @@ import be.ehealth.businessconnector.ehbox.api.domain.Document;
 import be.ehealth.businessconnector.ehbox.api.domain.DocumentMessage;
 import be.ehealth.businessconnector.ehbox.api.domain.NewsMessage;
 import be.ehealth.businessconnector.ehbox.api.domain.exception.EhboxBusinessConnectorException;
-import be.ehealth.businessconnector.ehbox.api.utils.QualityType;
-import be.ehealth.businessconnector.ehbox.v3.builders.BuilderFactory;
+import static be.ehealth.businessconnector.ehbox.v3.builders.BuilderFactory.getSendMessageBuilder;
 import be.ehealth.businessconnector.ehbox.v3.builders.SendMessageBuilder;
 import be.ehealth.businessconnector.ehbox.v3.session.EhealthBoxServiceV3;
-import be.ehealth.businessconnector.ehbox.v3.session.ServiceFactory;
+import static be.ehealth.businessconnector.ehbox.v3.session.ServiceFactory.getEhealthBoxServiceV3;
 import be.ehealth.technicalconnector.exception.ConnectorException;
 import be.ehealth.technicalconnector.exception.TechnicalConnectorException;
-import be.ehealth.technicalconnector.utils.ConnectorXmlUtils;
-import be.ehealth.technicalconnector.utils.IdentifierType;
+import static be.ehealth.technicalconnector.utils.ConnectorXmlUtils.logXmlObject;
 import be.fgov.ehealth.ehbox.consultation.protocol.v3.Message;
-import be.fgov.ehealth.ehbox.core.v3.CustomMetaType;
 import be.fgov.ehealth.ehbox.publication.protocol.v3.SendMessageRequest;
 import be.fgov.ehealth.ehbox.publication.protocol.v3.SendMessageResponse;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
+import static java.nio.charset.StandardCharsets.UTF_8;
 import java.util.Date;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import junit.framework.Assert;
-import labr_client.Public.PublicVars;
+import static java.util.logging.Level.SEVERE;
+import static java.util.logging.Logger.getLogger;
+import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.assertNotNull;
+import static labr_client.Public.PublicVars.getMimeType;
+import static labr_client.Public.PublicVars.getReceiver;
+import static labr_client.Public.PublicVars.getSender;
+import static labr_client.Public.PublicVars.getTitel;
 import org.bouncycastle.cms.CMSException;
 
 /**
@@ -60,52 +60,52 @@ public class e_health_publication {
     public static void send_message(String message) {
 
         try {
-            SendMessageBuilder builder = be.ehealth.businessconnector.ehbox.v3.builders.BuilderFactory.getSendMessageBuilder();
-            NewsMessage<Message> news = new NewsMessage<Message>();
+            SendMessageBuilder builder = getSendMessageBuilder();
+            NewsMessage<Message> news = new NewsMessage<>();
             news.getDocument().setTitle("Encrypted news " + new Date());
             news.getDocument().setContent(message.getBytes());
             news.getDocument().setFilename("LABR-123456789-123.txt");
             news.getDocument().setMimeType("text/xml");
-            news.setDestinations(PublicVars.getReceiver());
+            news.setDestinations(getReceiver());
             news.setImportant(true);
 
-            news.setSender(PublicVars.getSender());
+            news.setSender(getSender());
             SendMessageRequest request = builder.buildMessage(news);
 
-            EhealthBoxServiceV3 service = ServiceFactory.getEhealthBoxServiceV3();
-            ConnectorXmlUtils.logXmlObject(request);
+            EhealthBoxServiceV3 service = getEhealthBoxServiceV3();
+            logXmlObject(request);
             SendMessageResponse response = service.sendMessage(request);
-            Assert.assertEquals("100", response.getStatus().getCode());
-            Assert.assertNotNull(response.getId());
+            assertEquals("100", response.getStatus().getCode());
+            assertNotNull(response.getId());
         } catch (IOException ex) {
-            Logger.getLogger(e_health.class.getName()).log(Level.SEVERE, null, ex);
+            getLogger(e_health.class.getName()).log(SEVERE, null, ex);
         } catch (EhboxBusinessConnectorException ex) {
-            Logger.getLogger(e_health.class.getName()).log(Level.SEVERE, null, ex);
+            getLogger(e_health.class.getName()).log(SEVERE, null, ex);
         } catch (TechnicalConnectorException ex) {
-            Logger.getLogger(e_health.class.getName()).log(Level.SEVERE, null, ex);
+            getLogger(e_health.class.getName()).log(SEVERE, null, ex);
         } catch (ConnectorException ex) {
-            Logger.getLogger(e_health.class.getName()).log(Level.SEVERE, null, ex);
+            getLogger(e_health.class.getName()).log(SEVERE, null, ex);
         }
     }
 
     public static void sendDocumentMessage(String message, List<Addressee> Destinations) throws TechnicalConnectorException, EhboxBusinessConnectorException, IOException, CMSException, ConnectorException {
-        SendMessageBuilder builder = BuilderFactory.getSendMessageBuilder();         
+        SendMessageBuilder builder = getSendMessageBuilder();         
 
         
         
         DocumentMessage<Message> documentMsg = buildEhealthMessage(message,Destinations);        
         SendMessageRequest request = builder.buildMessage(documentMsg);
-        EhealthBoxServiceV3 service = ServiceFactory.getEhealthBoxServiceV3();
-        ConnectorXmlUtils.logXmlObject(request);
+        EhealthBoxServiceV3 service = getEhealthBoxServiceV3();
+        logXmlObject(request);
         SendMessageResponse response = service.sendMessage(request);
-        Assert.assertEquals("100", response.getStatus().getCode());
-        Assert.assertNotNull(response.getId());
+        assertEquals("100", response.getStatus().getCode());
+        assertNotNull(response.getId());
     }
 
     public static DocumentMessage<Message> buildEhealthMessage(String message,List<Addressee> Destinations) throws TechnicalConnectorException{
-        DocumentMessage<Message> documentMsg = new DocumentMessage<Message>();
+        DocumentMessage<Message> documentMsg = new DocumentMessage<>();
         documentMsg.setDestinations(Destinations);
-        documentMsg.setSender(PublicVars.getSender());
+        documentMsg.setSender(getSender());
         documentMsg.setImportant(false);        
         documentMsg.generatePublicationId();
         //documentMsg.setUsePublicationReceipt(true);
@@ -114,11 +114,11 @@ public class e_health_publication {
         documentMsg.setEncrypted(false);
         
         Document doc = new Document();
-        doc.setTitle(PublicVars.getTitel());
-        InputStream stream = new ByteArrayInputStream(message.getBytes(StandardCharsets.UTF_8));
+        doc.setTitle(getTitel());
+        InputStream stream = new ByteArrayInputStream(message.getBytes(UTF_8));
         doc.setContent(stream);
-        doc.setMimeType(PublicVars.getMimeType());
-        doc.setFilename(PublicVars.getTitel());
+        doc.setMimeType(getMimeType());
+        doc.setFilename(getTitel());
         documentMsg.setDocument(doc);
         return documentMsg;
     }

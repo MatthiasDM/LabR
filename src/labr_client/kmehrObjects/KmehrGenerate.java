@@ -18,8 +18,9 @@ package labr_client.kmehrObjects;
 
 import java.io.StringWriter;
 import java.net.MalformedURLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.util.HashMap;
+import static java.util.logging.Level.SEVERE;
+import static java.util.logging.Logger.getLogger;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -28,12 +29,10 @@ import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
+import static labr_client.kmehrObjects.xmlMethods.AddElement;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.xml.sax.SAXException;
-import be.ehealth.business.kmehrcommons.*;
-import be.ehealth.technicalconnector.exception.TechnicalConnectorException;
-import java.util.HashMap;
 
 /**
  *
@@ -56,16 +55,16 @@ public abstract class KmehrGenerate {
             
             return doc;
         } catch (ParserConfigurationException ex) {
-            Logger.getLogger(KmehrGenerate.class.getName()).log(Level.SEVERE, null, ex);
+            getLogger(KmehrGenerate.class.getName()).log(SEVERE, null, ex);
             return null;
         }
     }
    
     public Document AddHeader(Document doc){
-        HashMap<String, String> attr = new HashMap<String, String>();
+        HashMap<String, String> attr = new HashMap<>();
         attr.put("xmlns:xsi", "http://www.w3.org/2001/XMLSchema-instance");
         attr.put("xsi:schemaLocation", "kmehr_xschema\\ehealth-kmehr\\XSD\\kmehr_elements-1_14.xsd");
-        return xmlMethods.AddElement(doc,"kmehrmessage",attr);
+        return AddElement(doc,"kmehrmessage",attr);
         
     }
     
@@ -80,7 +79,7 @@ public abstract class KmehrGenerate {
             transformer.transform(source, result);
             return result.getWriter().toString();
         } catch (TransformerException ex) {
-            Logger.getLogger(KmehrGenerate.class.getName()).log(Level.SEVERE, null, ex);
+            getLogger(KmehrGenerate.class.getName()).log(SEVERE, null, ex);
             return null;
         }
         
@@ -104,11 +103,9 @@ public abstract class KmehrGenerate {
             xml_generated =  result.getWriter().toString();            
 			
             	
-            } catch (ParserConfigurationException pce) {
+            } catch (ParserConfigurationException | TransformerException pce) {
 		pce.printStackTrace();
-            } catch (TransformerException tfe) {
-		tfe.printStackTrace();
-        }      
+            }      
       
 	return xml_generated;
     }

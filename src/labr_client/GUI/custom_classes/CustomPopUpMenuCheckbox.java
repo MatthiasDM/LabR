@@ -20,10 +20,7 @@ import java.awt.Point;
 import java.awt.event.MouseEvent;
 import javax.swing.JCheckBox;
 import javax.swing.JPopupMenu;
-import labr_client.GUI.forms.AddNewRequests;
-import labr_client.GUI.forms.LabelForm;
-import labr_client.GUI.forms.MainWindow;
-import labr_client.Public.PublicVars;
+import static labr_client.Public.PublicVars.getSelectComponentOnLabRequestPanel;
 
 
 /**
@@ -49,17 +46,13 @@ public class CustomPopUpMenuCheckbox extends JPopupMenu {
     public void addMenuItems(){
     
       jMenuItemDeleteItem.setText("Delete item");
-        jMenuItemDeleteItem.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItemDeleteItemActionPerformed(evt);
-            }
-        });   
+        jMenuItemDeleteItem.addActionListener(this::jMenuItemDeleteItemActionPerformed);   
         
     }
     
     private void jMenuItemDeleteItemActionPerformed(java.awt.event.ActionEvent evt) {                                                  
         // TODO add your handling code here:
-        JCheckBox target = (JCheckBox) PublicVars.getSelectComponentOnLabRequestPanel();
+        JCheckBox target = (JCheckBox) getSelectComponentOnLabRequestPanel();
         //MainWindow.queries.deleteProfileRequest(PublicVars.getProfielID(), target.getMnemonic(), Integer.parseInt(PublicVars.getUserID()));
         //Dynamic_swing.infoBox(target.getName(), target.getText());
         lrp.remove(target);

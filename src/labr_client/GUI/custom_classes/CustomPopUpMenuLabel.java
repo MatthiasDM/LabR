@@ -20,9 +20,7 @@ import java.awt.Point;
 import java.awt.event.MouseEvent;
 import javax.swing.JLabel;
 import javax.swing.JPopupMenu;
-import labr_client.GUI.forms.AddNewRequests;
 import labr_client.GUI.forms.LabelForm;
-import labr_client.Public.PublicVars;
 
 
 /**
@@ -53,18 +51,10 @@ public class CustomPopUpMenuLabel extends JPopupMenu {
     public void addMenuItems(){
     
       jMenuItemEditLabel.setText("Edit label");
-        jMenuItemEditLabel.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItemEditLabelActionPerformed(evt);
-            }
-        });
+        jMenuItemEditLabel.addActionListener(this::jMenuItemEditLabelActionPerformed);
         
         jMenuItemDeleteLabel.setText("Delete label");
-        jMenuItemDeleteLabel.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItemDeleteLabelActionPerformed(evt);
-            }
-        });
+        jMenuItemDeleteLabel.addActionListener(this::jMenuItemDeleteLabelActionPerformed);
         
     }
     

@@ -16,9 +16,7 @@
  */
 package labr_client.xml;
 
-import be.ehealth.technicalconnector.enumeration.Charset;
 import java.awt.Component;
-import org.apache.commons.io.FileUtils;
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -44,6 +42,7 @@ import labr_client.xml.Kmehr.elements.Cd;
 import labr_client.xml.Kmehr.elements.Hcparty.Hcparty;
 import labr_client.xml.Kmehr.elements.Item;
 import labr_client.xml.Kmehr.elements.Transaction;
+import org.apache.commons.io.FileUtils;
 
 /**
  *

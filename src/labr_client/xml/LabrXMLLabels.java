@@ -26,7 +26,7 @@ import javax.xml.bind.annotation.XmlElement;
  */
 public class LabrXMLLabels {
 
-    private List<LabrXMLLabel> label = new ArrayList<LabrXMLLabel>();
+    private List<LabrXMLLabel> label = new ArrayList<>();
 
     public List<LabrXMLLabel> getLabel() {
         return label;

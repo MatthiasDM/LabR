@@ -16,17 +16,16 @@
  */
 package labr_client.kmehrObjects;
 
+import static java.lang.String.valueOf;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import static java.util.Calendar.getInstance;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import labr_client.GUI.custom_classes.Dynamic_swing;
+import static labr_client.Public.PublicVars.getPatientInformation;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
-import java.util.Calendar;
-import labr_client.GUI.forms.MainWindow;
-import labr_client.Public.PublicVars;
 
 /**
  *
@@ -37,21 +36,21 @@ public class KmehrLabRequest extends KmehrGenerate {
     //--------------------------------------------------------'
     private Document doc;
     private String xmlToString;
-    private List<Element> elements = new ArrayList<Element>();
+    private List<Element> elements = new ArrayList<>();
     private int counter = 0;
     private static final String SV = "1.15";
     private static final String STANDARD_VERSION = "20150901";
     //---------------------------------------------------------
 
-    private List<String> requests = new ArrayList<String>();
-    private List<String> subject = new ArrayList<String>();
+    private List<String> requests = new ArrayList<>();
+    private List<String> subject = new ArrayList<>();
     private String sender = null;
     private String receiver = null;
     private String title = null;
     
     public KmehrLabRequest() {
         
-        subject = PublicVars.getPatientInformation();
+        subject = getPatientInformation();
         doc = createDoc();
 
     }
@@ -81,7 +80,7 @@ public class KmehrLabRequest extends KmehrGenerate {
 
     public String printLabRequest(List<String> reqs) {
         requests = reqs;
-        HashMap<String, String> attr = new HashMap<String, String>();
+        HashMap<String, String> attr = new HashMap<>();
         attr.put("xmlns", "http://www.ehealth.fgov.be/standards/kmehr/schema/v1");
         elements.add(AddElement("kmehrmessage", "kmehrmessage", null, attr));//////////////////////////0
         addHeader();///////////////////////////////////////////////////////////////////////////////////1-14
@@ -91,7 +90,7 @@ public class KmehrLabRequest extends KmehrGenerate {
     }
 
     public void addHeader() {
-        HashMap<String, String> attr = new HashMap<String, String>();
+        HashMap<String, String> attr = new HashMap<>();
         elements.add(AddElement("header", "header", elements.get(elements.size() - 1), null)); //////////////////////////1
         elements.add(AddElement("standard", "standard", elements.get(elements.size() - 1), null));///////////////////////2
         //attr.put("SV", SV);
@@ -119,7 +118,7 @@ public class KmehrLabRequest extends KmehrGenerate {
     }
 
     public void addPatient(int parent) {
-        HashMap<String, String> attr = new HashMap<String, String>();       
+        HashMap<String, String> attr = new HashMap<>();       
         elements.add(AddElement("patient", "patient", elements.get(parent), null));//1
         attr.put("SV", SV);
         attr.put("S", "ID-PATIENT");
@@ -164,7 +163,7 @@ public class KmehrLabRequest extends KmehrGenerate {
     }
 
     public void addSex(int parent, String s) {
-        HashMap<String, String> attr = new HashMap<String, String>();
+        HashMap<String, String> attr = new HashMap<>();
         elements.add(AddElement("sex", "sex", elements.get(parent), null));
         addCD(elements.size() - 1, "CD-SEX", s);
 
@@ -172,7 +171,7 @@ public class KmehrLabRequest extends KmehrGenerate {
 
     public void addItem(int parent, int id, String cd) {
         elements.add(AddElement("item", "item", elements.get(parent), null));
-        addID(elements.size() - 1, "ID-KMEHR", String.valueOf(id));
+        addID(elements.size() - 1, "ID-KMEHR", valueOf(id));
         addCD(elements.size() - 2, "CD-ITEM", cd);
         elements.add(AddElement("content", "content", elements.get(elements.size() - 3), null));
         addCD(elements.size() - 1, "CD-LAB", "2951-2"); ///hierin moet de magie gebeuren
@@ -181,7 +180,7 @@ public class KmehrLabRequest extends KmehrGenerate {
     public void addLabItems(int parent, int id) {
 
         elements.add(AddElement("item", "item", elements.get(parent), null));
-        addID(elements.size() - 1, "ID-KMEHR", String.valueOf(id));
+        addID(elements.size() - 1, "ID-KMEHR", valueOf(id));
         addCD(elements.size() - 2, "CD-ITEM", "lab");
         elements.add(AddElement("content", "content", elements.get(elements.size() - 3), null));
         int i = 1;
@@ -211,7 +210,7 @@ public class KmehrLabRequest extends KmehrGenerate {
 
     public void addHcParty(int parent, String id, String cd, String firstName, String familyName) {
         int count = 0;
-        HashMap<String, String> attr = new HashMap<String, String>();
+        HashMap<String, String> attr = new HashMap<>();
         elements.add(AddElement("hcparty", "hcparty", elements.get(parent), null));/////////////////////////8
         count++;
         attr.clear();
@@ -240,7 +239,7 @@ public class KmehrLabRequest extends KmehrGenerate {
     }
 
     public void addID(int parent, String idName, String idValue) {
-        HashMap<String, String> attr = new HashMap<String, String>();
+        HashMap<String, String> attr = new HashMap<>();
         attr.clear();
         attr.put("SV", SV);
         attr.put("S", idName);
@@ -249,7 +248,7 @@ public class KmehrLabRequest extends KmehrGenerate {
     }
 
     public void addCD(int parent, String idName, String idValue) {
-        HashMap<String, String> attr = new HashMap<String, String>();
+        HashMap<String, String> attr = new HashMap<>();
         attr.clear();
         attr.put("SV", SV);
         attr.put("S", idName);
@@ -260,13 +259,13 @@ public class KmehrLabRequest extends KmehrGenerate {
     public void addDate(int parent) {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMdd");
         elements.add(AddElement("date", "date", elements.get(parent), null));///////////////////////////////5
-        elements.get(elements.size() - 1).setTextContent(dateFormat.format(Calendar.getInstance().getTime()));
+        elements.get(elements.size() - 1).setTextContent(dateFormat.format(getInstance().getTime()));
     }
 
     public void addTime(int parent) {
         SimpleDateFormat timeFormat = new SimpleDateFormat("hh:mm:ss");
         elements.add(AddElement("time", "time", elements.get(parent), null));///////////////////////////////6
-        elements.get(elements.size() - 1).setTextContent(timeFormat.format(Calendar.getInstance().getTime()));
+        elements.get(elements.size() - 1).setTextContent(timeFormat.format(getInstance().getTime()));
     }
 //
     

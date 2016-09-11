@@ -20,14 +20,10 @@ import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.font.FontRenderContext;
 import java.awt.geom.Rectangle2D;
-import java.io.File;
-import java.net.URL;
 import java.util.List;
 import java.util.function.Predicate;
-import javax.swing.JFrame;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
-import labr_client.GUI.forms.AddNewRequests;
 
 /**
  *

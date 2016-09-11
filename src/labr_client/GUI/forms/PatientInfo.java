@@ -18,21 +18,17 @@ package labr_client.GUI.forms;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Enumeration;
 import java.util.List;
-import javax.swing.AbstractButton;
-import javax.swing.JRadioButton;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.table.DefaultTableModel;
-import labr_client.GUI.custom_classes.LabRequestPanel;
-import static labr_client.GUI.forms.MainWindow.showPatientInfo;
-import labr_client.ehealth.e_health;
-import labr_client.Public.PublicVars;
-import labr_client.xml.LabrRequest;
 import labr_client.GUI.custom_classes.CustomJPanel;
+import labr_client.GUI.custom_classes.LabRequestPanel;
+import labr_client.Public.PublicVars;
+import labr_client.ehealth.e_health;
+import labr_client.xml.LabrRequest;
 /**
  *
  * @author familie

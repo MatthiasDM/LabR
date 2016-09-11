@@ -17,18 +17,18 @@
 package labr_client.SQLite;
 
 import java.io.UnsupportedEncodingException;
-import java.math.BigInteger;
-import java.nio.charset.Charset;
-import java.nio.charset.StandardCharsets;
 import java.security.*;
-
-import java.util.ArrayList;
+import static java.security.MessageDigest.getInstance;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
+import static java.util.logging.Level.SEVERE;
+import static java.util.logging.Logger.getLogger;
 import labr_client.Public.*;
+import static labr_client.Public.PublicVars.getMd5pass;
+import static labr_client.Public.PublicVars.setMd5pass;
+import static labr_client.Public.PublicVars.setUserData;
+import static labr_client.Public.PublicVars.setUserID;
+import static labr_client.Public.PublicVars.setUsername;
+import static labr_client.Public.encryption.decodeBase64Aes;
 
 /**
  *
@@ -37,7 +37,7 @@ import labr_client.Public.*;
 public class SqLiteSessionManager {
 
     public boolean logInAttempt(String userName, String md5Pass) throws UnsupportedEncodingException, NoSuchAlgorithmException {
-        PublicVars.setMd5pass(MD5(md5Pass));
+        setMd5pass(MD5(md5Pass));
 
         List<String[]> lines = PublicVars.getQueries().selectUserInfoPass((md5Pass), userName);
 //        try {
@@ -49,18 +49,18 @@ public class SqLiteSessionManager {
 
         if (!lines.isEmpty()) {
             try {
-                if (encryption.decodeBase64Aes(lines.get(0)[10]).equals(PublicVars.getMd5pass())) {
+                if (decodeBase64Aes(lines.get(0)[10]).equals(getMd5pass())) {
                     for (String[] values : lines) {
-                        PublicVars.setUsername(values[0]);
-                        PublicVars.setUserID(values[1]);
+                        setUsername(values[0]);
+                        setUserID(values[1]);
                     }
-                    PublicVars.setUserData(lines.get(0));
+                    setUserData(lines.get(0));
                     return true;
                 } else {
                     return false;
                 }
             } catch (GeneralSecurityException ex) {
-                Logger.getLogger(SqLiteSessionManager.class.getName()).log(Level.SEVERE, null, ex);
+                getLogger(SqLiteSessionManager.class.getName()).log(SEVERE, null, ex);
                 return false;
             }
 
@@ -90,7 +90,7 @@ public class SqLiteSessionManager {
     public static String MD5(String text)
             throws NoSuchAlgorithmException, UnsupportedEncodingException {
         MessageDigest md;
-        md = MessageDigest.getInstance("MD5");
+        md = getInstance("MD5");
         byte[] md5hash = new byte[32];
         md.update(text.getBytes("iso-8859-1"), 0, text.length());
         md5hash = md.digest();

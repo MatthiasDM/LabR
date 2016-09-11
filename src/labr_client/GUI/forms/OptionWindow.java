@@ -16,14 +16,9 @@
  */
 package labr_client.GUI.forms;
 
-import java.io.File;
-import java.util.List;
-import javax.swing.AbstractButton;
 import labr_client.GUI.custom_classes.CustomJButton;
-import labr_client.GUI.custom_classes.CustomJFrame;
 import labr_client.GUI.custom_classes.CustomJPanel;
 import labr_client.Public.PublicVars;
-import labr_client.SQLite.SQLiteQueries;
 
 /**
  *

@@ -19,14 +19,10 @@ package labr_client.xml.Kmehr;
 import java.util.ArrayList;
 import java.util.List;
 import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlElementRef;
 import javax.xml.bind.annotation.XmlRootElement;
-import labr_client.xml.Kmehr.elements.Hcparty.Hcparty;
 import labr_client.xml.Kmehr.elements.Id;
 import labr_client.xml.Kmehr.elements.Patient;
 import labr_client.xml.Kmehr.elements.Transaction;
-import labr_client.xml.LabrXMLPatient;
-import labr_client.xml.patient.Name;
 
 /**
  *
@@ -40,7 +36,7 @@ public class KmehrFolder {
     @XmlElement
     public Patient patient = new Patient();
 
-    private List<Transaction> transaction = new ArrayList<Transaction>();
+    private List<Transaction> transaction = new ArrayList<>();
 
     public List<Transaction> getTransaction() {
         return transaction;

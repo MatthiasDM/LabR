@@ -18,24 +18,35 @@ package labr_client.GUI.custom_classes;
 
 import be.ehealth.technicalconnector.exception.TechnicalConnectorException;
 import java.awt.Color;
+import static java.awt.Color.BLACK;
+import static java.awt.Color.decode;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-
-import java.awt.RenderingHints;
+import static java.awt.RenderingHints.KEY_ANTIALIASING;
+import static java.awt.RenderingHints.VALUE_ANTIALIAS_ON;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.File;
+import static java.lang.Boolean.FALSE;
+import static java.lang.Boolean.TRUE;
+import static java.lang.System.exit;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import static java.util.logging.Level.SEVERE;
+import static java.util.logging.Logger.getLogger;
 import javax.swing.JMenuBar;
+import static labr_client.GUI.custom_classes.Dynamic_swing.questionBox;
 import labr_client.GUI.forms.MainWindow;
 import static labr_client.GUI.forms.MainWindow.deleteProfile;
+import static labr_client.GUI.forms.MainWindow.ehealth_start_session;
+import static labr_client.GUI.forms.MainWindow.optionWindow;
 import static labr_client.GUI.forms.MainWindow.queries;
-import labr_client.Public.PublicVars;
-import labr_client.xml.ObjToXML;
-import labr_client.xml.XMLToObj;
+import static labr_client.Public.PublicVars.getUserData;
+import static labr_client.Public.PublicVars.setIsEdit;
+import static labr_client.Public.PublicVars.setProfielID;
+import static labr_client.Public.PublicVars.setProfielNamen;
+import static labr_client.xml.ObjToXML.saveProfile;
+import static labr_client.xml.XMLToObj.loadProfile;
 
 /**
  *
@@ -73,7 +84,7 @@ public class CustomJMenuBar extends JMenuBar {
     @Override
     public void paintComponent(Graphics g) {
         Graphics2D g2 = (Graphics2D) g;
-        g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+        g2.setRenderingHint(KEY_ANTIALIASING, VALUE_ANTIALIAS_ON);
         g2.setColor(bgColor);
         g2.fillRect(0, 0, getWidth(), getHeight());
     }
@@ -81,21 +92,21 @@ public class CustomJMenuBar extends JMenuBar {
     public void initMenu() {
 
         //---------------------------------------------------------------------------------
-        jMenuKL = new CustomJMenu(Color.BLACK, "Labr", 100, 32, 10, 40);
-        jMenuLabR = new CustomJMenu(Color.decode("#DDB300"), "Order entry", 100, 16);
-        jMenuItemOptions = new CustomJMenuItem(Color.BLACK, "Options", 100, 12);
-        jMenuItemEhealth = new CustomJMenuItem(Color.BLACK, "Ehealth", 100, 12);
-        jMenuItemExitApplication = new CustomJMenuItem(Color.BLACK, "Exit", 100, 12);
+        jMenuKL = new CustomJMenu(BLACK, "Labr", 100, 32, 10, 40);
+        jMenuLabR = new CustomJMenu(decode("#DDB300"), "Order entry", 100, 16);
+        jMenuItemOptions = new CustomJMenuItem(BLACK, "Options", 100, 12);
+        jMenuItemEhealth = new CustomJMenuItem(BLACK, "Ehealth", 100, 12);
+        jMenuItemExitApplication = new CustomJMenuItem(BLACK, "Exit", 100, 12);
         //---------------------------------------------------------------------------------               
-        jMenuConnect = new CustomJMenu(Color.decode("#A41931"), "Connect", 100, 16);
+        jMenuConnect = new CustomJMenu(decode("#A41931"), "Connect", 100, 16);
         //---------------------------------------------------------------------------------  
-        jMenuProfile = new CustomJMenu(Color.decode("#DDB300"), "Profile > ", 100, 12, 35);
-        jMenuProfiles = new CustomJMenu(Color.decode("#DDB300"), "Profiles >", 100, 12, 35);
-        jMenuItemSaveCurrentProfile = new CustomJMenuItem(Color.decode("#DDB300"), "Save profile", 100, 12);
-        jMenuItemRenameProfile = new CustomJMenuItem(Color.decode("#DDB300"), "Rename profile", 100, 12);
-        jMenuItemDeleteProfile = new CustomJMenuItem(Color.decode("#DDB300"), "Delete profile", 100, 12);
-        jMenuItemNewProfile = new CustomJMenuItem(Color.decode("#DDB300"), "New profile", 100, 12);
-        jCheckBoxMenuItemEditProfile = new CustomJCheckBoxMenuItem(Color.decode("#DDB300"), "Edit profile", 100, 12);
+        jMenuProfile = new CustomJMenu(decode("#DDB300"), "Profile > ", 100, 12, 35);
+        jMenuProfiles = new CustomJMenu(decode("#DDB300"), "Profiles >", 100, 12, 35);
+        jMenuItemSaveCurrentProfile = new CustomJMenuItem(decode("#DDB300"), "Save profile", 100, 12);
+        jMenuItemRenameProfile = new CustomJMenuItem(decode("#DDB300"), "Rename profile", 100, 12);
+        jMenuItemDeleteProfile = new CustomJMenuItem(decode("#DDB300"), "Delete profile", 100, 12);
+        jMenuItemNewProfile = new CustomJMenuItem(decode("#DDB300"), "New profile", 100, 12);
+        jCheckBoxMenuItemEditProfile = new CustomJCheckBoxMenuItem(decode("#DDB300"), "Edit profile", 100, 12);
         //---------------------------------------------------------------------------------  
         jMenuOutbox = new CustomJMenu(new Color(50, 138, 171), "Database", 100, 16);
         jMenuKL.setText("Labr");
@@ -128,74 +139,40 @@ public class CustomJMenuBar extends JMenuBar {
         });
 
         jMenuItemOptions.setText("Options");
-        jMenuItemOptions.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItemOptionsActionPerformed(evt);
-            }
-        });
+        jMenuItemOptions.addActionListener(this::jMenuItemOptionsActionPerformed);
         jMenuKL.add(jMenuItemOptions);
 
         jMenuItemEhealth.setText("E-health");
-        jMenuItemEhealth.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItemEhealthActionPerformed(evt);
-            }
-        });
+        jMenuItemEhealth.addActionListener(this::jMenuItemEhealthActionPerformed);
         jMenuKL.add(jMenuItemEhealth);
 
         jMenuItemExitApplication.setText("Exit");
-        jMenuItemExitApplication.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItemExitApplicationActionPerformed(evt);
-            }
-        });
+        jMenuItemExitApplication.addActionListener(this::jMenuItemExitApplicationActionPerformed);
         jMenuKL.add(jMenuItemExitApplication);
         this.add(jMenuKL);
 
         //------------------------------------------------
         jMenuProfile.setText("Profile > ");
-        jMenuProfile.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                PG.setLrpVisible();
-            }
+        jMenuProfile.addActionListener((java.awt.event.ActionEvent evt) -> {
+            PG.setLrpVisible();
         });
         jMenuProfiles.setText("Profiles >");
         jMenuProfile.add(jMenuProfiles);
         loadProfiles();
         jMenuItemSaveCurrentProfile.setText("Save profile");
-        jMenuItemSaveCurrentProfile.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItemSaveCurrentProfileActionPerformed(evt);
-            }
-        });
+        jMenuItemSaveCurrentProfile.addActionListener(this::jMenuItemSaveCurrentProfileActionPerformed);
         jMenuProfile.add(jMenuItemSaveCurrentProfile);
         jMenuItemRenameProfile.setText("Rename profile");
-        jMenuItemRenameProfile.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItemRenameProfileActionPerformed(evt);
-            }
-        });
+        jMenuItemRenameProfile.addActionListener(this::jMenuItemRenameProfileActionPerformed);
         jMenuProfile.add(jMenuItemRenameProfile);
         jMenuItemDeleteProfile.setText("Delete profile");
-        jMenuItemDeleteProfile.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItemDeleteProfileActionPerformed(evt);
-            }
-        });
+        jMenuItemDeleteProfile.addActionListener(this::jMenuItemDeleteProfileActionPerformed);
         jMenuProfile.add(jMenuItemDeleteProfile);
         jMenuItemNewProfile.setText("New Profile");
-        jMenuItemNewProfile.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItemNewProfileActionPerformed(evt);
-            }
-        });
+        jMenuItemNewProfile.addActionListener(this::jMenuItemNewProfileActionPerformed);
         jMenuProfile.add(jMenuItemNewProfile);
         jCheckBoxMenuItemEditProfile.setText("Edit Profile");
-        jCheckBoxMenuItemEditProfile.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jCheckBoxMenuItemEditProfileActionPerformed(evt);
-            }
-        });
+        jCheckBoxMenuItemEditProfile.addActionListener(this::jCheckBoxMenuItemEditProfileActionPerformed);
         jMenuProfile.add(jCheckBoxMenuItemEditProfile);
 
         jMenuLabR.add(jMenuProfile);
@@ -282,24 +259,22 @@ public class CustomJMenuBar extends JMenuBar {
 //            });
 //            jMenuProfiles.add(menuItem);
 //        }
-        List<String> results = new ArrayList<String>();
+        List<String> results = new ArrayList<>();
 
-        File[] files = new File(PublicVars.getUserData()[9]).listFiles();
+        File[] files = new File(getUserData()[9]).listFiles();
 //If this pathname does not denote a directory, then listFiles() returns null. 
 
         for (File file : files) {
             if (file.isFile()) {
                 String fileName = file.getName().replace(".xml", "");
-                CustomJMenuItem menuItem = new CustomJMenuItem(Color.decode("#DDB300"), fileName, 100, 12);
+                CustomJMenuItem menuItem = new CustomJMenuItem(decode("#DDB300"), fileName, 100, 12);
                 menuItem.setName(fileName);
-                menuItem.addActionListener(new java.awt.event.ActionListener() {
-                    public void actionPerformed(java.awt.event.ActionEvent evt) {
-                        PublicVars.setProfielID(fileName);
-//                        labRequestPanel.loadLabRequestPanel();
+                menuItem.addActionListener((java.awt.event.ActionEvent evt) -> {
+                    setProfielID(fileName);
+                    //                        labRequestPanel.loadLabRequestPanel();
 //                        labRequestPanel.loadLabels();
-                        labRequestPanel.removeAll();
-                        labRequestPanel.loadRequestOrProfile(XMLToObj.loadProfile(((CustomJMenuItem) evt.getSource()).getName()));
-                    }
+labRequestPanel.removeAll();
+labRequestPanel.loadRequestOrProfile(loadProfile(((CustomJMenuItem) evt.getSource()).getName()));
                 });
                 jMenuProfiles.add(menuItem);
                 results.add(file.getName());
@@ -314,7 +289,7 @@ public class CustomJMenuBar extends JMenuBar {
     }
 
     public void renameProfile() {
-        String profielNaam = Dynamic_swing.questionBox("Please input new name of profile: ");
+        String profielNaam = questionBox("Please input new name of profile: ");
         if (!profielNaam.isEmpty()) {
             // isRemovingItem = true;
             queries.updateProfileName(profielNaam);
@@ -327,7 +302,7 @@ public class CustomJMenuBar extends JMenuBar {
     private void addProfiles() {
 
         List<String[]> lines = queries.loadProfiles();
-        PublicVars.setProfielNamen(lines);
+        setProfielNamen(lines);
 
     }
 
@@ -339,7 +314,7 @@ public class CustomJMenuBar extends JMenuBar {
 
     private void jMenuItemOptionsActionPerformed(java.awt.event.ActionEvent evt) {
         // TODO add your handling code here:
-        MainWindow.optionWindow.setVisible(true);
+        optionWindow.setVisible(true);
 
     }
 
@@ -359,10 +334,10 @@ public class CustomJMenuBar extends JMenuBar {
     private void jCheckBoxMenuItemEditProfileActionPerformed(java.awt.event.ActionEvent evt) {
 
         if (((CustomJCheckBoxMenuItem) evt.getSource()).isSelected()) {
-            PublicVars.setIsEdit(Boolean.TRUE);
+            setIsEdit(TRUE);
             labRequestPanel.registerComponentMove();
         } else {
-            PublicVars.setIsEdit(Boolean.FALSE);
+            setIsEdit(FALSE);
             labRequestPanel.unregisterComponentMove();
         }
 
@@ -371,24 +346,24 @@ public class CustomJMenuBar extends JMenuBar {
     private void jMenuItemExitApplicationActionPerformed(java.awt.event.ActionEvent evt) {
         // TODO add your handling code here:
         //e_health_session_manager.close_session();
-        System.exit(0);
+        exit(0);
     }
 
     private void jMenuItemEhealthActionPerformed(java.awt.event.ActionEvent evt) {
         try {
             // TODO add your handling code here:
-            MainWindow.ehealth_start_session();
+            ehealth_start_session();
 
         } catch (TechnicalConnectorException ex) {
-            Logger.getLogger(MainWindow.class.getName()).log(Level.SEVERE, null, ex);
+            getLogger(MainWindow.class.getName()).log(SEVERE, null, ex);
         }
     }
 
     private void jMenuItemSaveCurrentProfileActionPerformed(java.awt.event.ActionEvent evt) {
         // TODO add your handling code here:
-        ObjToXML.saveProfile(labRequestPanel.getComponents(), "default");
+        saveProfile(labRequestPanel.getComponents(), "default");
         labRequestPanel.removeAll();
-        labRequestPanel.loadRequestOrProfile(XMLToObj.loadProfile("default"));
+        labRequestPanel.loadRequestOrProfile(loadProfile("default"));
 //        labRequestPanel.updateRequestPositions();
 //        labRequestPanel.updateLabelPositions();
 //        labRequestPanel.loadLabRequestPanel();

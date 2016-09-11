@@ -17,29 +17,30 @@
 package labr_client.ehealth;
 
 import be.ehealth.technicalconnector.exception.TechnicalConnectorException;
-import be.ehealth.technicalconnector.service.ServiceFactory;
+import static be.ehealth.technicalconnector.service.ServiceFactory.getKeyDepotService;
 import be.ehealth.technicalconnector.service.etee.domain.EncryptionToken;
 import be.ehealth.technicalconnector.service.keydepot.KeyDepotManager;
-import be.ehealth.technicalconnector.service.keydepot.KeyDepotManagerFactory;
+import static be.ehealth.technicalconnector.service.keydepot.KeyDepotManagerFactory.getKeyDepotManager;
 import be.ehealth.technicalconnector.service.keydepot.KeyDepotService;
-import be.ehealth.technicalconnector.session.Session;
-import java.lang.reflect.Field;
-import java.lang.reflect.Modifier;
-import java.util.Set;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import labr_client.GUI.custom_classes.Dynamic_swing;
+import static be.ehealth.technicalconnector.session.Session.getInstance;
 import be.ehealth.technicalconnector.utils.CertificateParser;
 import be.ehealth.technicalconnector.utils.IdentifierType;
+import static be.ehealth.technicalconnector.utils.IdentifierType.valueOf;
 import be.fgov.ehealth.etkdepot._1_0.protocol.GetEtkRequest;
 import be.fgov.ehealth.etkdepot._1_0.protocol.GetEtkResponse;
 import be.fgov.ehealth.etkdepot._1_0.protocol.MatchingEtk;
 import be.fgov.ehealth.etkdepot._1_0.protocol.SearchCriteriaType;
+import static java.lang.Long.parseLong;
+import java.lang.reflect.Field;
+import static java.lang.reflect.Modifier.isStatic;
 import java.security.GeneralSecurityException;
-import java.security.cert.CertificateParsingException;
 import java.util.ArrayList;
 import java.util.List;
-import org.junit.Assert;
+import java.util.Set;
+import static java.util.logging.Level.INFO;
+import static java.util.logging.Level.SEVERE;
+import static java.util.logging.Logger.getLogger;
+import static labr_client.GUI.custom_classes.Dynamic_swing.infoBox;
 
 /**
  *
@@ -47,7 +48,7 @@ import org.junit.Assert;
  */
 public class e_health_key_depot {
 
-    KeyDepotManager manager = KeyDepotManagerFactory.getKeyDepotManager();
+    KeyDepotManager manager = getKeyDepotManager();
     String type = "";
     String id = "";
 
@@ -59,14 +60,14 @@ public class e_health_key_depot {
 
         try {
             String results = "";
-            type = IdentifierType.valueOf(idType);
+            type = valueOf(idType);
 
             if (appId == "") {
                 appId = null;
             }
-            manager = KeyDepotManagerFactory.getKeyDepotManager();
+            manager = getKeyDepotManager();
 
-            Set<EncryptionToken> etk = manager.getEtkSet(type, Long.parseLong(idValue), appId);
+            Set<EncryptionToken> etk = manager.getEtkSet(type, parseLong(idValue), appId);
 
             if (etk != null) {
                 for (EncryptionToken encryptionToken : etk) {
@@ -74,14 +75,14 @@ public class e_health_key_depot {
 
                 }
 
-                Dynamic_swing.infoBox(results, "Result");
+                infoBox(results, "Result");
                 found = true;
-                Logger.getLogger(e_health_key_depot.class.getName()).log(Level.INFO, "Not found: [" + type + "] " + id);
+                getLogger(e_health_key_depot.class.getName()).log(INFO, "Not found: [" + type + "] " + id);
             }
 
         } catch (TechnicalConnectorException ex) {
 
-            Logger.getLogger(e_health_key_depot.class.getName()).log(Level.INFO, "Not found: [" + type + "] " + id);
+            getLogger(e_health_key_depot.class.getName()).log(INFO, "Not found: [" + type + "] " + id);
         }
         return found;
     }
@@ -93,7 +94,7 @@ public class e_health_key_depot {
 
         Field[] fields = IdentifierType.class.getDeclaredFields();
         for (Field f : fields) {
-            if (Modifier.isStatic(f.getModifiers())) {
+            if (isStatic(f.getModifiers())) {
                 Class<?> c = f.getType();
                 String name = f.getName();
                 found = testsearchETK(name, idValue, null);
@@ -104,18 +105,18 @@ public class e_health_key_depot {
                 }
             }
         }
-        Dynamic_swing.infoBox("aantal overlopen: " + teller + "\n" + qualities, "Result");
+        infoBox("aantal overlopen: " + teller + "\n" + qualities, "Result");
     }
 
     public void checkCertificate() {
 
         try {
 
-            CertificateParser certParser = new CertificateParser(Session.getInstance().getSession().getSAMLToken().getCertificate());
-            Dynamic_swing.infoBox("App = " + certParser.getApplication() + "\n Type = " + certParser.getType() + "\n Value =" + certParser.getValue(), "Result");
+            CertificateParser certParser = new CertificateParser(getInstance().getSession().getSAMLToken().getCertificate());
+            infoBox("App = " + certParser.getApplication() + "\n Type = " + certParser.getType() + "\n Value =" + certParser.getValue(), "Result");
             
         } catch (TechnicalConnectorException ex) {
-            Logger.getLogger(e_health_key_depot.class.getName()).log(Level.SEVERE, null, ex);
+            getLogger(e_health_key_depot.class.getName()).log(SEVERE, null, ex);
         }
 
     }
@@ -135,7 +136,7 @@ public class e_health_key_depot {
         SearchCriteriaType searchCriteria = new SearchCriteriaType();
         // the request expects a list of identifiers to get the ETK for.
         // in this example we will provide a list with 1 item.
-        List<be.fgov.ehealth.etkdepot._1_0.protocol.IdentifierType> listIdentifiers = new ArrayList<be.fgov.ehealth.etkdepot._1_0.protocol.IdentifierType>();
+        List<be.fgov.ehealth.etkdepot._1_0.protocol.IdentifierType> listIdentifiers = new ArrayList<>();
         // create the identifier
         be.fgov.ehealth.etkdepot._1_0.protocol.IdentifierType identifier = new be.fgov.ehealth.etkdepot._1_0.protocol.IdentifierType();
         // set the application name
@@ -158,7 +159,7 @@ public class e_health_key_depot {
         /*
          * Invoke the technical connector framework's ETK Service's getEtk operation
          */
-        KeyDepotService service = ServiceFactory.getKeyDepotService();
+        KeyDepotService service = getKeyDepotService();
         GetEtkResponse response = service.getETK(request);
         List<MatchingEtk> matches = response.getMatchingEtks();
         String applicationID = null, type = null, value = null;
@@ -174,10 +175,10 @@ public class e_health_key_depot {
         }
         if (response.getETK() != null) {
             EncryptionToken token = new EncryptionToken(response.getETK());
-            Dynamic_swing.infoBox("applicationID: " + applicationID + "\n" + "type: " + type + "\n" + "value: " + value + "\n Name: " + token.getCertificate().getSubjectDN().getName(), "Result");
+            infoBox("applicationID: " + applicationID + "\n" + "type: " + type + "\n" + "value: " + value + "\n Name: " + token.getCertificate().getSubjectDN().getName(), "Result");
             return token.getCertificate().getSubjectDN().getName();
         } else {
-            Dynamic_swing.infoBox("applicationID: " + applicationID + "\n" + "type: " + type + "\n" + "value: " + value, "Result");
+            infoBox("applicationID: " + applicationID + "\n" + "type: " + type + "\n" + "value: " + value, "Result");
             return applicationID;
         }
 

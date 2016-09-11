@@ -16,11 +16,10 @@
  */
 package labr_client.GUI.custom_classes;
 
-import java.awt.Color;
+import static java.awt.Color.red;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
-import java.awt.RenderingHints;
 import java.awt.image.BufferedImage;
 import javax.swing.JCheckBox;
 
@@ -50,7 +49,7 @@ public class CustomJCheckBox extends JCheckBox {
         width = this.getHeight();
         bbg = (Graphics2D) this.getGraphics();
         //bbg.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-        bbg.setColor(Color.red);
+        bbg.setColor(red);
         if (r != null) {
             bbg.drawRect(r.x - this.getX(), r.y-this.getY(), r.width, r.height);
         }

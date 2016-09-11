@@ -16,12 +16,10 @@
  */
 package labr_client.GUI.forms;
 
-import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.UnsupportedEncodingException;
 import java.security.NoSuchAlgorithmException;
@@ -29,9 +27,9 @@ import java.util.Properties;
 import java.util.logging.*;
 import labr_client.GUI.custom_classes.ComponentMover;
 import labr_client.GUI.custom_classes.CustomJPanel;
-import labr_client.SQLite.SqLiteSessionManager;
 import labr_client.Public.PublicVars;
 import labr_client.SQLite.SQLiteQueries;
+import labr_client.SQLite.SqLiteSessionManager;
 
 /**
  *

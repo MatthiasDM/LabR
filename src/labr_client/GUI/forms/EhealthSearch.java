@@ -34,7 +34,6 @@ import be.fgov.ehealth.addressbook.protocol.v1.SearchOrganizationsResponse;
 import be.fgov.ehealth.addressbook.protocol.v1.SearchProfessionalsRequest;
 import be.fgov.ehealth.addressbook.protocol.v1.SearchProfessionalsResponse;
 import java.util.ArrayList;
-import java.util.Arrays;
 import static java.util.Arrays.asList;
 import java.util.List;
 import java.util.logging.Level;
@@ -42,9 +41,7 @@ import java.util.logging.Logger;
 import javax.swing.JTable;
 import javax.swing.WindowConstants;
 import labr_client.GUI.custom_classes.CustomJPanel;
-import static labr_client.GUI.forms.MainWindow.queries;
 import labr_client.Public.PublicFunctions;
-import labr_client.Public.PublicVars;
 import org.apache.commons.lang.math.NumberUtils;
 import org.joda.time.DateTime;
 

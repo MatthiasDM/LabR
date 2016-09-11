@@ -28,7 +28,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement(name = "content")
 public class Content {
 
-    private List<Cd> cd = new ArrayList<Cd>();
+    private List<Cd> cd = new ArrayList<>();
 
     public List<Cd> getCd() {
         return cd;

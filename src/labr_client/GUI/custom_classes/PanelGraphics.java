@@ -34,6 +34,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.image.BufferedImage;
 import javax.swing.JScrollPane;
+import javax.swing.ScrollPaneConstants;
 import javax.swing.Timer;
 import labr_client.GUI.forms.MainWindow;
 
@@ -51,20 +52,22 @@ public class PanelGraphics extends JPanel implements ActionListener {
     Color c = Color.decode("#EDEBE5");
     Rectangle logoBounds, button1Bounds, button2Bounds;
     //-------------------------------------
-    
+
     Boolean button1 = false, button2 = false, logo = false;
     Boolean menuClick = false;
     Boolean menuCleared = false;
     Timer timer;
 
 //-------------------------------------
+    JScrollPane lrpScrollContainer = new JScrollPane();
+
     public LabRequestPanel lrp;
     public customOutbox out;
     CustomJMenuBar jmb;
     JScrollPane outBoxScrollPane;
     //-------------------------------------
     public static javax.swing.JPopupMenu jPopupMenuLabel;
-    
+
     public PanelGraphics(int width, int height) {
 
         //setMinimumSize(new Dimension(width, height));
@@ -73,21 +76,21 @@ public class PanelGraphics extends JPanel implements ActionListener {
         this.addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
-                
+
             }
-            
+
             @Override
             public void mouseReleased(MouseEvent e) {
-                
+
             }
-            
+
             @Override
             public void mouseClicked(MouseEvent e) {
 //                checkForClick(e, button1Bounds, 1);
 //                checkForClick(e, button2Bounds, 2);
 //                checkForClick(e, logoBounds, 3);
             }
-            
+
         });
         this.addMouseMotionListener(new MouseMotionAdapter() {
             @Override
@@ -97,29 +100,40 @@ public class PanelGraphics extends JPanel implements ActionListener {
 //                checkForHover(event, logoBounds, 3);
             }
         });
-        
-        lrp = new LabRequestPanel();
+
+        lrp = new LabRequestPanel(this);
         jmb = new CustomJMenuBar(Color.decode("#71456C"), lrp, this);
         out = new customOutbox(lrp, this);
+        lrpScrollContainer = new JScrollPane();
         outBoxScrollPane = new JScrollPane();
         outBoxScrollPane.setBorder(null);
         outBoxScrollPane.add(out);
         outBoxScrollPane.setViewportView(out);
+        lrpScrollContainer.setBorder(null);
+        lrpScrollContainer.add(lrp);
+        lrp.setSize(2000, 2000);
+        lrp.setPreferredSize(new Dimension(2000, 2000));
+        lrpScrollContainer.setViewportView(lrp);
+
         this.setLayout(null);
+
         this.add(jmb);
-        this.add(lrp); 
+        //this.add(lrp); 
+        this.add(lrpScrollContainer);
         this.add(outBoxScrollPane);
+
+        // lrpScrollContainer.setVisible(true);
         lrp.setVisible(true);
         jmb.setVisible(true);
         out.setVisible(true);
         revalidate();
-        
-        this.setSize(new Dimension(width, height));        
+
+        this.setSize(new Dimension(width, height));
         this.setVisible(true);
 
         // backBuffer = createImage(this.getWidth(), this.getHeight());
     }
-    
+
     void checkForHover(MouseEvent event, Rectangle2D rect, int id) {
         if (rect.contains(event.getPoint())) {
             if (id == 1) {
@@ -146,15 +160,15 @@ public class PanelGraphics extends JPanel implements ActionListener {
                 setCursor(Cursor.getDefaultCursor());
             }
         }
-        
+
     }
-    
+
     void checkForClick(MouseEvent event, Rectangle2D rect, int id) {
         if (rect.contains(event.getPoint())) {
             if (id == 1) {
-                
+
             } else if (id == 2) {
-                
+
             } else if (id == 3) {
                 menuClick = true;
             }
@@ -164,9 +178,9 @@ public class PanelGraphics extends JPanel implements ActionListener {
         if (event.getY() > rect.getMaxY()) {
             menuClick = false;
         }
-        
+
     }
-    
+
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         g2 = (Graphics2D) g;
@@ -178,7 +192,7 @@ public class PanelGraphics extends JPanel implements ActionListener {
         bbg.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         bbg.setColor(c);
         bbg.fillRect(0, 0, width, height);
-        
+
         drawHeading(); //80 hoog, begint op 20
         drawKLBackground();
         //drawHeaderLogo();
@@ -189,9 +203,9 @@ public class PanelGraphics extends JPanel implements ActionListener {
 //        drawButton1();
 
         g2.drawImage(backBuffer, 0, 0, this);
-        
+
     }
-    
+
     public void drawHeading() {
         bbg.setColor(Color.decode("#71456C"));
         bbg.fillRoundRect((int) (width * 0.025), 20, (int) (width * 0.95), 80, headerRounding, headerRounding);
@@ -199,9 +213,9 @@ public class PanelGraphics extends JPanel implements ActionListener {
         jmb.setLocation((int) (width * 0.025) + 10, 20);
         jmb.setSize((int) (width * 0.80), 62);
         jmb.setBackground(Color.red);
-        
+
     }
-    
+
     public void drawKLBackground() {
         bbg.setColor(Color.decode("#000000"));
         int logoWidth = (int) (width * 0.1);
@@ -221,18 +235,24 @@ public class PanelGraphics extends JPanel implements ActionListener {
 //        int verschuivingx = (logoWidth - fontWidth) / 2 - (headerRounding / 4);
 //        drawString("KL", x + verschuivingx, y - verschuivingy, font, "#FFFFFF");
     }
-    
+
     public void drawBody() {
         bbg.setColor(Color.decode("#FFFFFF"));
         int hoogte = height - 130;
         bbg.fillRect((int) (width * 0.025), 80, (int) (width * 0.95), hoogte);
-        lrp.setSize((int) (width * 0.95), hoogte);
-        lrp.setLocation((int) (width * 0.025), 80);
-        outBoxScrollPane.setSize((int) (width * 0.95)-10, hoogte-10);
-        outBoxScrollPane.setLocation((int) (width * 0.025) + 5, 80+5);
-       
+        // lrp.setSize((int) (width * 0.95), hoogte);
+        // lrp.setLocation((int) (width * 0.025), 80);
+        lrpScrollContainer.setSize((int) (width * 0.95), hoogte);
+        lrpScrollContainer.setPreferredSize(new Dimension((int) (width * 0.95), hoogte));
+        lrpScrollContainer.setLocation((int) (width * 0.025), 80);
+
+        lrp.setSize(2000, 2000);
+        lrp.setLocation(0, 0);
+        outBoxScrollPane.setSize((int) (width * 0.95) - 10, hoogte - 10);
+        outBoxScrollPane.setLocation((int) (width * 0.025) + 5, 80 + 5);
+        lrpScrollContainer.setViewportView(lrp);
     }
-    
+
     public void drawFooter() {
         bbg.setColor(Color.decode("#FFB300"));
         int ypos = height - 120 + 80;
@@ -241,47 +261,49 @@ public class PanelGraphics extends JPanel implements ActionListener {
         MainWindow.jToolBar1.setSize((int) (width * 0.80), 20);
         MainWindow.jToolBar1.setBackground(Color.decode("#FFB300"));
     }
-    
+
     public void drawString(String text, int x, int y, Font f, String color) {
         bbg.setColor(Color.decode(color));
-        
+
         bbg.drawString(text, x, y);
-        
+
     }
-    
+
     double getWidth(String message, Font f) {
-        
+
         Rectangle2D bounds = getBounds(message, f);
         return bounds.getWidth();
     }
-    
+
     double getHeight(String message, Font f) {
-        
+
         Rectangle2D bounds = getBounds(message, f);
         return bounds.getHeight();
     }
-    
+
     Rectangle2D getBounds(String message, Font f) {
         FontRenderContext context;
         context = g2.getFontRenderContext();
         return f.getStringBounds(message, context);
     }
-    
+
     public void actionPerformed(ActionEvent ev) {
         if (ev.getSource() == timer) {
             repaint();// this will call at every 1 second
         }
     }
-    
+
     public void setLrpVisible() {
         outBoxScrollPane.setVisible(false);
-        lrp.setVisible(true);
+        //lrp.setVisible(true);
+        lrpScrollContainer.setVisible(true);
     }
-    
+
     public void setOutboxVisible() {
-        lrp.setVisible(false);
+        lrpScrollContainer.setVisible(false);
+        //lrp.setVisible(false);
         outBoxScrollPane.setVisible(true);
-        
+
     }
 
 //    @Override

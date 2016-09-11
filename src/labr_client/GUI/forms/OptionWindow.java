@@ -38,7 +38,7 @@ public class OptionWindow extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
         this.setLocationRelativeTo(null);
-        this.setSize(640, 480);
+        this.setSize(480, 480);
         loadSettings();
     }
 

@@ -32,7 +32,10 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.Insets;
 import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.BufferedWriter;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -40,7 +43,6 @@ import java.io.OutputStreamWriter;
 import java.io.Writer;
 
 import java.util.ArrayList;
-
 
 import java.util.List;
 
@@ -50,6 +52,7 @@ import java.util.logging.Logger;
 
 import javax.swing.JCheckBox;
 import javax.swing.JTable;
+import javax.swing.Timer;
 import javax.swing.table.DefaultTableModel;
 import labr_client.SQLite.SQLiteQueries;
 import labr_client.SQLite.SqLiteSessionManager;
@@ -193,12 +196,15 @@ public class MainWindow extends javax.swing.JFrame {
         //PublicVars.setProperties(p);   
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         int w = Integer.parseInt(PublicVars.getProperties().getProperty("width"));
+        Insets scnMax = Toolkit.getDefaultToolkit().getScreenInsets(getGraphicsConfiguration());
+        int taskBarSize = scnMax.bottom;
+
         if (w > screenSize.width) {
             w = screenSize.width;
         }
         int h = Integer.parseInt(PublicVars.getProperties().getProperty("height"));
-        if (h > screenSize.height) {
-            h = screenSize.height;
+        if (h > screenSize.height - taskBarSize) {
+            h = screenSize.height - taskBarSize;
         }
         this.setSize(w, h);
         init_objects();
@@ -218,7 +224,6 @@ public class MainWindow extends javax.swing.JFrame {
         //jTabbedPane1.setVisible(false);
         //jMenuBar1.setVisible(false);
         //---------------------------------------------------------------
-  
         labRequestPanel = new PanelGraphics(getWidth() - 17, getHeight() - 34);
         this.add(labRequestPanel);
         labRequestPanel.setVisible(true);
@@ -227,7 +232,7 @@ public class MainWindow extends javax.swing.JFrame {
         cm = PublicVars.getCM();
         l = new SqLiteSessionManager();
         jLabelUser.setText(PublicVars.getUsername());
-
+        infoTimer.start();
 //        loadProfiles();
         //      loadSentMessages();
     }
@@ -245,7 +250,7 @@ public class MainWindow extends javax.swing.JFrame {
         }
     }
 
-    public static List<Addressee> getReceivers(KmehrMessage message) {       
+    public static List<Addressee> getReceivers(KmehrMessage message) {
         List<Addressee> addresseeList = new ArrayList<Addressee>();
         Addressee addressee = new Addressee(IdentifierType.NIHII_LABO);
         addressee.setId("83166909");//90060717196   83166909
@@ -265,7 +270,7 @@ public class MainWindow extends javax.swing.JFrame {
     }
 
     public String createLabRequest() {
-       // PublicVars.setReceiver(getReceivers());
+        // PublicVars.setReceiver(getReceivers());
         String xml = "";
         LabRequest1 = new KmehrLabRequest();
         xml = LabRequest1.printLabRequest(gui_components.getSelectedCheckboxLabTest(labRequestPanel.getComponents()));
@@ -329,7 +334,7 @@ public class MainWindow extends javax.swing.JFrame {
             Logger.getLogger(MainWindow.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
+
     public void sendToEhealth(KmehrMessage kmehrMessage) {
         String xml = ObjToXML.marshallRequest(kmehrMessage);
         try {
@@ -420,8 +425,8 @@ public class MainWindow extends javax.swing.JFrame {
     }
 
     public String getRequest() {
-       // return jTextAreaRequest.getText();
-       return "";
+        // return jTextAreaRequest.getText();
+        return "";
     }
 
     public void send_ehealth_request() {
@@ -443,7 +448,7 @@ public class MainWindow extends javax.swing.JFrame {
     }
 
     public static void hideAddPatientLabel() {
-     //   jLabelClickToAddPatient.setVisible(false);
+        //   jLabelClickToAddPatient.setVisible(false);
     }
 
 //    public void loadSentMessages() {
@@ -534,6 +539,21 @@ public class MainWindow extends javax.swing.JFrame {
 
     }
 
+    public void ramUsage() {
+        long mem = Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory();
+        mem /= 1000000;
+        jLabelRAM.setText(String.valueOf(mem));
+    }
+
+    Timer infoTimer = new Timer(1000, new ActionListener() {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            ramUsage();
+        }     
+    });
+
+    
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -559,7 +579,9 @@ public class MainWindow extends javax.swing.JFrame {
         jLabelSessionStatus = new javax.swing.JLabel();
         jLabel14 = new javax.swing.JLabel();
         jLabelSentToLab = new javax.swing.JLabel();
-        filler2 = new javax.swing.Box.Filler(new java.awt.Dimension(100, 0), new java.awt.Dimension(100, 0), new java.awt.Dimension(100, 32767));
+        filler1 = new javax.swing.Box.Filler(new java.awt.Dimension(20, 0), new java.awt.Dimension(20, 0), new java.awt.Dimension(20, 0));
+        jLabel2 = new javax.swing.JLabel();
+        jLabelRAM = new javax.swing.JLabel();
 
         jMenuItem3.setText("Delete item");
         jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
@@ -651,7 +673,13 @@ public class MainWindow extends javax.swing.JFrame {
 
         jLabelSentToLab.setText("default");
         jToolBar1.add(jLabelSentToLab);
-        jToolBar1.add(filler2);
+        jToolBar1.add(filler1);
+
+        jLabel2.setText("RAM: ");
+        jToolBar1.add(jLabel2);
+
+        jLabelRAM.setText("jLabel4");
+        jToolBar1.add(jLabelRAM);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -722,7 +750,7 @@ public class MainWindow extends javax.swing.JFrame {
 
     private void jLabel3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel3MouseClicked
         // TODO add your handling code here:
-               EhealthSearch es = new EhealthSearch();
+        EhealthSearch es = new EhealthSearch();
         try {
             es.setVisible(true);
         } catch (Exception ex) {
@@ -734,11 +762,13 @@ public class MainWindow extends javax.swing.JFrame {
      */
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.Box.Filler filler2;
+    private javax.swing.Box.Filler filler1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabelEIDName;
+    private javax.swing.JLabel jLabelRAM;
     private javax.swing.JLabel jLabelSentToLab;
     private static javax.swing.JLabel jLabelSessionStatus;
     private javax.swing.JLabel jLabelUser;

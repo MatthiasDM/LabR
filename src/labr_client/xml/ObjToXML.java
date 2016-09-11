@@ -378,9 +378,14 @@ public class ObjToXML {
                             request.patient.nationalNumber.setY(comp.getY());
                             request.patient.nationalNumber.setWidth(comp.getWidth());
                         } else if (comp.getName().equals("Save")) {
+                            JButton jbut = (JButton) comp;
+                            ImageIcon icon = (ImageIcon) jbut.getIcon();
                             request.buttons.save.setX(comp.getX());
                             request.buttons.save.setY(comp.getY());
                             request.buttons.save.setValue("Save");
+                            if (icon != null) {
+                                request.buttons.save.setIcon(icon.getDescription());
+                            }
                         } else if (comp.getName().equals("Search")) {
                         } else if (comp.getName().equals("saveAndSend")) {
                             request.patient.nationalNumber.setValue(((JTextField) comp).getText());

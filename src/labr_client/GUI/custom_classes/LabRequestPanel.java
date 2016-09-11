@@ -84,8 +84,8 @@ public final class LabRequestPanel extends JPanel implements DropTargetListener 
 
     Boolean drawSelectionBox = false;
     LabrRequest currentRequest;
-
-    public LabRequestPanel() {
+PanelGraphics pg;
+    public LabRequestPanel(PanelGraphics p) {
 
         DropTarget dropTarget = new DropTarget(this, this);
         this.addMouseListener(new MouseAdapter() {
@@ -168,6 +168,7 @@ public final class LabRequestPanel extends JPanel implements DropTargetListener 
         this.setLayout(null);
         height = this.getHeight();
         width = this.getHeight();
+        pg = p;
         c = Color.white;
         javax.swing.GroupLayout groupLayout = new javax.swing.GroupLayout(this);
         this.setLayout(groupLayout);
@@ -959,6 +960,7 @@ public final class LabRequestPanel extends JPanel implements DropTargetListener 
                 JButton currentButton = (JButton) e.getComponent();
                 if (currentButton.getName().equals("Save")) {
                     ObjToXML.saveKmehrRequest(ObjToXML.saveLabrRequest(e.getComponent().getParent().getComponents()));
+                    pg.out.loadSentMessages();
                 }
                 if (currentButton.getName().equals("Search")) {
                     MainWindow.OpenPatientSearch(((JButton) e.getSource()).getParent().getComponents());

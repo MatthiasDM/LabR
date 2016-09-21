@@ -23,6 +23,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import static java.util.Arrays.copyOf;
+import java.util.HashMap;
 import java.util.List;
 import static java.util.logging.Level.SEVERE;
 import static java.util.logging.Logger.getLogger;
@@ -93,4 +94,31 @@ public class SQLiteQueryProcesser extends SQLite {
 
     }
 
+    public List<HashMap> parseSelectStatement2(String sql, String[] attributes) {
+        try {
+            Connection c = getC();
+            List<HashMap> lines;
+            try (Statement stmt = c.createStatement()) {
+                ResultSet rs = stmt.executeQuery(sql);
+                lines = new ArrayList<>();
+                HashMap values = new HashMap();
+                
+                while (rs.next()) {                    
+                    for (String attr : attributes) {
+                        values.put(attr, rs.getString(attr));
+                    } 
+                    lines.add(values);                   
+                    values.clear();
+                }
+                rs.close();
+            }
+           
+            return lines;
+        } catch (SQLException ex) {
+            getLogger(SQLiteQueryProcesser.class.getName()).log(SEVERE, null, ex);
+            return null;
+        }
+
+    }
+    
 }

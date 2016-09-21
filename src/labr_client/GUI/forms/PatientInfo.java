@@ -165,7 +165,7 @@ public final class PatientInfo extends javax.swing.JFrame {
     private void initComponents() {
 
         buttonGroupSex = new javax.swing.ButtonGroup();
-        jPanel1 = new CustomJPanel(480,640, "#A41931");
+        jPanel1 = new CustomJPanel(480,640, "#DDB300");
         jLabelNewpatient = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jTextFieldSearchLastName = new javax.swing.JTextField();
@@ -329,9 +329,9 @@ public final class PatientInfo extends javax.swing.JFrame {
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap(30, Short.MAX_VALUE)
+                .addContainerGap(40, Short.MAX_VALUE)
                 .addComponent(jLabelNewpatient)
-                .addGap(30, 30, 30)
+                .addGap(40, 40, 40)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jTextFieldSearchFirstname, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)

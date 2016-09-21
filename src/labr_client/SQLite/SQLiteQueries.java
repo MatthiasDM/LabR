@@ -21,7 +21,10 @@ import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import labr_client.GUI.custom_classes.Dynamic_swing;
@@ -45,27 +48,6 @@ public class SQLiteQueries {
     public void updateProfileName(String Profielnaam) {
         String statement = "UPDATE Profielnamen SET Profielnaam = '" + Profielnaam + "' WHERE GebruikersID = " + PublicVars.getUserID() + " AND ID = " + PublicVars.getProfielID();
         SQL.parseUpdateStatement(statement);
-    }
-
-    public void deleteProfile(int profileID) {
-        if (Dynamic_swing.infoBox("Are you sure you want to delete this profile?", "Profile deletion") == 0) {
-            String[] statements = {
-                "delete from Profielnamen WHERE ProfielID = " + profileID + " AND GebruikersID = " + PublicVars.getUserID(),
-                "delete from Aanvraagprofielen WHERE ProfielID = " + profileID + " AND GebruikersID = " + PublicVars.getUserID(),
-                "delete from GroupLabel WHERE ID = " + profileID + " AND GebruikersID = " + PublicVars.getUserID()
-            };
-
-            try {
-                for (String statement : statements) {
-                    PreparedStatement preparedStatement = SQL.getC().prepareStatement(statement);
-                    preparedStatement.execute();
-                }
-
-            } catch (SQLException ex) {
-                Logger.getLogger(SQLiteQueries.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
-
     }
 
     public List<String[]> selectLabel(String Tekst) {
@@ -222,12 +204,31 @@ public class SQLiteQueries {
         //String statement = "Select * from Gebruikers WHERE Wachtwoord LIKE '" + md5Pass + "' AND Gebruikersnaam LIKE '" + userName + "'";
         String statement = "Select * from Gebruikers WHERE Gebruikersnaam LIKE '" + userName + "'";
 
-        String[] attributes = {"Gebruikersnaam", "ID", "firstname", "lastname", "inss", "nihii", "keystore", "ehealthpass", "keystoreLocation", "profileLocation", "Wachtwoord"};
+        String[] attributes = {"Gebruikersnaam", "ID", "firstname", "lastname", "inss", "nihii", "keystore", "ehealthpass", "keystoreLocation", "profileLocation", "Wachtwoord", "defaultReceiverINSS", "defaultReceiverName"};
         List<String[]> lines = new ArrayList<String[]>();
         lines = SQL.parseSelectStatement(statement, attributes);
+
         Assert.assertNotNull(lines);
         return lines;
 
+    }
+
+    public HashMap updateUserInfo(HashMap updates, String userID) {
+        String set = "";
+        Iterator it = updates.entrySet().iterator();
+        while (it.hasNext()) {
+            Map.Entry pair = (Map.Entry) it.next();
+            set += pair.getKey() + " = " + "'" + pair.getValue() + "'";
+            if(it.hasNext()){
+                set += ",";
+            }            
+            it.remove(); // avoids a ConcurrentModificationException
+        }
+        
+        String statement = "UPDATE Gebruikers SET " + set + " WHERE ID = " + userID;
+        SQL.parseUpdateStatement(statement);
+
+        return null;
     }
 
     public void insertPatient(LabrRequest request) {

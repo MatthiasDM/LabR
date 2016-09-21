@@ -29,7 +29,8 @@ public class LabrXMLRequest {
     String comment;
     String value;
     boolean selected;
-
+    String labelID;
+    
     public String getValue() {
         return value;
     }

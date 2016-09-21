@@ -33,6 +33,8 @@ import labr_client.SQLite.SQLiteQueries;
  */
 public class PublicVars {
 
+    private static final String MAX_SECONDS = "";
+    
     private static String senderName, senderApplicationName, receiverName, receiverApplicationName;
     private static List<String> patientInformation = new ArrayList();
     private static String[] userData;
@@ -59,7 +61,7 @@ public class PublicVars {
     private static ComponentMover CM;
     private static JPanel labRequestPanel;
     private static Boolean isEdit = false;
-
+    
     public static Boolean getIsEdit() {
         return isEdit;
     }

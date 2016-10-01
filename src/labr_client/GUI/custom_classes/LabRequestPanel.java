@@ -176,7 +176,7 @@ PanelGraphics pg;
     BufferedImage backBuffer;
     boolean mouseDown = false;
     int width, height;
-    Color c;
+    Color c,d;
     Rectangle r;
     //END----------------------------------------------------
 
@@ -187,6 +187,7 @@ PanelGraphics pg;
         height = this.getHeight();
         width = this.getWidth();
         c = Color.white;
+        d = Color.decode("#DDB300");
         if (backBuffer == null) {
             height = this.getHeight();
             width = this.getHeight();
@@ -195,7 +196,7 @@ PanelGraphics pg;
             bbg.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
             bbg.setColor(c);
             bbg.fillRect(0, 0, 2000, 2000);
-            bbg.setComposite(AlphaComposite.SrcOver.derive(0.8f));
+            //bbg.setComposite(AlphaComposite.SrcOver.derive(0.8f));
         }
         g2.drawImage(backBuffer, 0, 0, this);
 

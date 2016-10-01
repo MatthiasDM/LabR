@@ -390,7 +390,6 @@ public class EhealthSearch extends javax.swing.JFrame {
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         try {
             // TODO add your handling code here:
-
             populateTableProfs(searchProfessionals(jTextFieldProfFirstName.getText(), jTextFieldProfName.getText()));
         } catch (ConnectorException ex) {
             Logger.getLogger(EhealthSearch.class.getName()).log(Level.SEVERE, null, ex);

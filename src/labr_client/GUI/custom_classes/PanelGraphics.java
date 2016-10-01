@@ -113,7 +113,8 @@ public class PanelGraphics extends JPanel implements ActionListener {
         lrp.setSize(2000, 2000);
         lrp.setPreferredSize(new Dimension(2000, 2000));
         lrpScrollContainer.setViewportView(lrp);
-
+        lrpScrollContainer.getVerticalScrollBar().setUnitIncrement(10);
+        lrpScrollContainer.getHorizontalScrollBar().setUnitIncrement(10);
         this.setLayout(null);
 
         this.add(jmb);
@@ -239,17 +240,16 @@ public class PanelGraphics extends JPanel implements ActionListener {
         bbg.setColor(Color.decode("#FFFFFF"));
         int hoogte = height - 130;
         bbg.fillRect((int) (width * 0.025), 80, (int) (width * 0.95), hoogte);
-        // lrp.setSize((int) (width * 0.95), hoogte);
-        // lrp.setLocation((int) (width * 0.025), 80);
+        int offsetx = lrpScrollContainer.getHorizontalScrollBar().getValue();
+        int offsety = lrpScrollContainer.getVerticalScrollBar().getValue();
         lrpScrollContainer.setSize((int) (width * 0.95), hoogte);
         lrpScrollContainer.setPreferredSize(new Dimension((int) (width * 0.95), hoogte));
         lrpScrollContainer.setLocation((int) (width * 0.025), 80);
-
         lrp.setSize(2000, 2000);
-        lrp.setLocation(0, 0);
+        lrp.setLocation(offsetx*-1, offsety*-1);        
         outBoxScrollPane.setSize((int) (width * 0.95) - 10, hoogte - 10);
         outBoxScrollPane.setLocation((int) (width * 0.025) + 5, 80 + 5);
-        lrpScrollContainer.setViewportView(lrp);
+
     }
 
     public void drawFooter() {

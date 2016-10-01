@@ -20,6 +20,7 @@ import java.awt.Point;
 import java.awt.event.MouseEvent;
 import javax.swing.JPopupMenu;
 import labr_client.GUI.forms.AddNewRequests;
+import labr_client.GUI.forms.AttributesWindow;
 import labr_client.GUI.forms.LabelForm;
 
 
@@ -72,8 +73,7 @@ public class CustomPopUpMenu extends JPopupMenu {
     }   
     private void jMenuEditAttributesActionPerformed(java.awt.event.ActionEvent evt) {                                           
         // TODO add your handling code here:
-        CustomJFrame cjf = new CustomJFrame(640,480);
-        
+        AttributesWindow newAttributeWindow = new AttributesWindow(320,240,1);
         
     }   
 }

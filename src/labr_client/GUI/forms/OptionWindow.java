@@ -37,7 +37,7 @@ public class OptionWindow extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
         this.setLocationRelativeTo(null);
-        this.setSize(400, 480);
+        this.setSize(400, 480);        
         loadSettings();
     }
 
@@ -57,6 +57,11 @@ public class OptionWindow extends javax.swing.JDialog {
     
     public void updateSetting(HashMap hm){
         PublicVars.getQueries().updateUserInfo(hm, PublicVars.getUserData()[1]);
+    }
+    
+    private void changeCredentials(){
+    
+        
     }
 
     /**
@@ -104,7 +109,7 @@ public class OptionWindow extends javax.swing.JDialog {
         jButton1 = new javax.swing.JButton();
         jLabel11 = new javax.swing.JLabel();
         defaultReceiverName = new javax.swing.JTextField();
-        jButton3 = new javax.swing.JButton();
+        jButtonSearchEhealth = new javax.swing.JButton();
         defaultReceiverINSS = new javax.swing.JLabel();
 
         jLabel9.setText("Nihii:");
@@ -116,7 +121,7 @@ public class OptionWindow extends javax.swing.JDialog {
         setResizable(false);
 
         jLabel12.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jLabel12.setText("Search for eHealth members");
+        jLabel12.setText("Klinilab Labr Options");
 
         jTabbedPane1.setTabPlacement(javax.swing.JTabbedPane.LEFT);
 
@@ -128,6 +133,7 @@ public class OptionWindow extends javax.swing.JDialog {
         });
 
         jTextFieldProfileLocation.setText("jTextField6");
+        jTextFieldProfileLocation.setName("profileLocation"); // NOI18N
 
         jButtonSaveGeneral.setText("Save changes");
         jButtonSaveGeneral.addActionListener(new java.awt.event.ActionListener() {
@@ -144,6 +150,7 @@ public class OptionWindow extends javax.swing.JDialog {
         });
 
         jTextFieldKeyStore.setText("jTextField7");
+        jTextFieldKeyStore.setName("keystoreLocation"); // NOI18N
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -203,17 +210,26 @@ public class OptionWindow extends javax.swing.JDialog {
 
         jLabel1.setText("Username: ");
 
-        jTextFieldUserName.setText("jTextField1");
+        jTextFieldUserName.setName("Gebruikersnaam"); // NOI18N
 
-        jLabel2.setText("Password: ");
+        jLabel2.setText("Old password: ");
 
         jLabel3.setText("New password: ");
 
         jLabel4.setText("Confirm password: ");
 
         jButtonSaveChanges.setText("Save changes");
+        jButtonSaveChanges.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonSaveChangesActionPerformed(evt);
+            }
+        });
 
-        jPasswordFieldCurrentPass.setText("jPasswordField1");
+        jPasswordFieldCurrentPass.setName("Wachtwoord"); // NOI18N
+
+        jPasswordFieldNewPass.setName("Wachtwoord2"); // NOI18N
+
+        jPasswordFieldConfirmNewPass.setName("Wachtwoord3"); // NOI18N
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -233,7 +249,7 @@ public class OptionWindow extends javax.swing.JDialog {
                             .addComponent(jPasswordFieldCurrentPass)
                             .addComponent(jPasswordFieldConfirmNewPass)
                             .addComponent(jPasswordFieldNewPass))
-                        .addGap(0, 79, Short.MAX_VALUE)))
+                        .addGap(0, 91, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -297,10 +313,10 @@ public class OptionWindow extends javax.swing.JDialog {
         defaultReceiverName.setText("jTextFieldDefaultReceiver");
         defaultReceiverName.setName("defaultReceiverName"); // NOI18N
 
-        jButton3.setText("Search");
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
+        jButtonSearchEhealth.setText("Search");
+        jButtonSearchEhealth.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
+                jButtonSearchEhealthActionPerformed(evt);
             }
         });
 
@@ -316,7 +332,7 @@ public class OptionWindow extends javax.swing.JDialog {
                     .addGroup(jPanel4Layout.createSequentialGroup()
                         .addComponent(defaultReceiverName, javax.swing.GroupLayout.PREFERRED_SIZE, 1, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton3))
+                        .addComponent(jButtonSearchEhealth))
                     .addGroup(jPanel4Layout.createSequentialGroup()
                         .addComponent(jLabel6)
                         .addGap(24, 24, 24)
@@ -368,7 +384,7 @@ public class OptionWindow extends javax.swing.JDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(defaultReceiverName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton3))
+                    .addComponent(jButtonSearchEhealth))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(defaultReceiverINSS)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 137, Short.MAX_VALUE)
@@ -382,14 +398,14 @@ public class OptionWindow extends javax.swing.JDialog {
         jPanel5.setLayout(jPanel5Layout);
         jPanel5Layout.setHorizontalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel5Layout.createSequentialGroup()
-                .addGap(77, 77, 77)
-                .addComponent(jLabel12)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
                 .addContainerGap(50, Short.MAX_VALUE)
                 .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 277, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(50, 50, 50))
+            .addGroup(jPanel5Layout.createSequentialGroup()
+                .addGap(100, 100, 100)
+                .addComponent(jLabel12)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -438,7 +454,7 @@ public class OptionWindow extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_jButtonProfileLocationActionPerformed
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+    private void jButtonSearchEhealthActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSearchEhealthActionPerformed
         // TODO add your handling code here:
         EhealthSearch es = new EhealthSearch();
         try {
@@ -446,12 +462,11 @@ public class OptionWindow extends javax.swing.JDialog {
         } catch (Exception ex) {
             Logger.getLogger(MainWindow.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }//GEN-LAST:event_jButton3ActionPerformed
+    }//GEN-LAST:event_jButtonSearchEhealthActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        HashMap hm = new HashMap();
-        
+        HashMap hm = new HashMap();        
         hm.put(lastname.getName(), lastname.getText());
         hm.put(fistname.getName(), fistname.getText());
         hm.put(nihii.getName(), nihii.getText());
@@ -460,6 +475,11 @@ public class OptionWindow extends javax.swing.JDialog {
         hm.put(defaultReceiverINSS.getName(), defaultReceiverINSS.getText());
         updateSetting(hm);
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButtonSaveChangesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSaveChangesActionPerformed
+        // TODO add your handling code here:
+        changeCredentials();
+    }//GEN-LAST:event_jButtonSaveChangesActionPerformed
 
     /**
      * @param args the command line arguments
@@ -511,11 +531,11 @@ public class OptionWindow extends javax.swing.JDialog {
     private javax.swing.JTextField inss;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
     private javax.swing.JButton jButtonKeyStoreLocation;
     private javax.swing.JButton jButtonProfileLocation;
     private javax.swing.JButton jButtonSaveChanges;
     private javax.swing.JButton jButtonSaveGeneral;
+    private javax.swing.JButton jButtonSearchEhealth;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
